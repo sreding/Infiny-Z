@@ -10,7 +10,7 @@
 (define BACKGROUND (empty-scene WIDTH HEIGHT))
 (define GUN (scale (/ 1 15)(bitmap/file "GUN.png")))
 ;Example colapsed for visibility
-(define Example (make-GameState (make-Player (rectangle 30 60 "solid" "brown")
+(define Example (make-GameState (make-Player (triangle 60 "solid" "brown")
                                              100
                                              (make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
                                              (make-Weapon GUN
@@ -62,7 +62,7 @@
 ; Takes a List of Zombie and places it on the image
 (define (draw-zombies Zombies Image)
   (cond [(empty? Zombies) Image]
-        [else (place-image (Zombie-img (first Zombies))
+        [else (place-image  (Zombie-img (first Zombies))
                             (posn-x (Zombie-position (first Zombies)))
                             (posn-y (Zombie-position (first Zombies)))
                             (draw-zombies (rest Zombies) Image))]))
@@ -75,6 +75,8 @@
                             (posn-y (Projectile-position (first Projectiles)))
                             (draw-projectiles (rest Projectiles) Image))]))
 
+
+
 ; Player + background-> Img
 ; Places player into background
 (define (draw-player Player Background)
@@ -83,18 +85,20 @@
  (posn-x (Player-position Player))
  (posn-y (Player-position Player))
  Background))
-; Player -> Number
 
+; Player -> Number
 (define (WeaponAngle Player)
-  (cond [(= (posn-x (Player-position Player)) (Weapon-x (Player-Weapon Player))) 90]
+  (cond [(and (= (posn-x (Player-position Player)) (Weapon-x (Player-Weapon Player))) (> (posn-y (Player-position Player)) (Weapon-y (Player-Weapon Player))))  90]
+        [(= (posn-x (Player-position Player)) (Weapon-x (Player-Weapon Player))) 270]
         [(not (= (posn-x (Player-position Player)) (Weapon-x (Player-Weapon Player))))
          (local ((define angle (* (/ 360 (* 2 pi))
             (atan
              (/
-              (- (posn-y (Player-position Player))(Weapon-y (Player-Weapon Player)))
-              (- (Weapon-x (Player-Weapon Player)) (posn-x (Player-position Player)))))))
+              (- (Weapon-y (Player-Weapon Player)) (posn-y (Player-position Player)))
+              (-  (posn-x (Player-position Player)) (Weapon-x (Player-Weapon Player)))))))
                  )
-           (if (< (Weapon-y (Player-Weapon Player)) (posn-y (Player-position Player))) (+ angle 90) angle))] ))
+           (if (< (Weapon-x (Player-Weapon Player)) (posn-x (Player-position Player))) (+ angle 180) angle))] ))
+
 ;Player -> Player
 (define (spiegläääää Player img)
   (cond [(< (Weapon-y (Player-Weapon Player)) (posn-y (Player-position Player)))
