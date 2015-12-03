@@ -23,6 +23,7 @@
 (define (main _)
   (big-bang Example
             [to-draw render]
+            [on-key keyhandler]
             [on-mouse mouse-handle]))
 
 
