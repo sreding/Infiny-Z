@@ -1,5 +1,7 @@
 #lang racket
 
+; Draw weapon fix
+
 (require 2htdp/image)
 (require "DataDefinitions.rkt")
 
