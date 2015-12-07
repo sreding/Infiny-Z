@@ -24,6 +24,7 @@
   (big-bang Example
             [to-draw render]
             [on-key keyhandler]
+            [on-tick update]
             [on-mouse mouse-handle]))
 
 

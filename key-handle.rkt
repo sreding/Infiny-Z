@@ -1,6 +1,6 @@
 #lang racket
 
-(define SPEED 10)
+(define SPEED 20)
 
 
 

@@ -10,10 +10,10 @@
 (define BACKGROUND (empty-scene WIDTH HEIGHT))
 (define GUN (scale (/ 1 15)(bitmap/file "GUN.png")))
 ;Example colapsed for visibility
-(define Example (make-GameState (make-Player (triangle 60 "solid" "brown")
+(define Example (make-GameState (make-Player 1
                                              100
                                              (make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
-                                             (make-Weapon GUN
+                                             (make-Weapon 1
                                                           0
                                                           0
                                                           9000))
@@ -31,29 +31,29 @@
                                               (make-posn (random WIDTH) (- HEIGHT 30))
                                               9000))
                                 (list
-                                 (make-Projectile (circle 10 "solid" "green")
+                                 (make-Projectile 1
                                                   (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn 0 0)
+                                                  (make-posn 2 3)
                                                   9000)
-                                 (make-Projectile (circle 10 "solid" "green")
+                                 (make-Projectile 1
                                                   (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn 0 0)
+                                                  (make-posn -5 0)
                                                   9000)
-                                 (make-Projectile (circle 10 "solid" "green")
+                                 (make-Projectile 1
                                                   (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn 0 0)
+                                                  (make-posn 0.3 0)
                                                   9000)
-                                 (make-Projectile (circle 10 "solid" "green")
+                                 (make-Projectile 1
                                                   (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn 0 0)
+                                                  (make-posn -1 1)
                                                   9000)
-                                 (make-Projectile (circle 10 "solid" "green")
+                                 (make-Projectile 1
                                                   (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn 0 0)
+                                                  (make-posn 2 -5)
                                                   9000)
-                                 (make-Projectile (circle 10 "solid" "green")
+                                 (make-Projectile 1
                                                   (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn 0 0)
+                                                  (make-posn 2 -3)
                                                   9000))
                                 0))
 
@@ -70,7 +70,7 @@
 ; Projectiles --> image
 (define (draw-projectiles Projectiles Image)
   (cond [(empty? Projectiles) Image]
-        [else (place-image (Projectile-img (first Projectiles))
+        [else (place-image (cond [(= 1 (Projectile-img (first Projectiles))) (circle 10 "solid" "green")]) 
                             (posn-x (Projectile-position (first Projectiles)))
                             (posn-y (Projectile-position (first Projectiles)))
                             (draw-projectiles (rest Projectiles) Image))]))
@@ -81,7 +81,7 @@
 ; Places player into background
 (define (draw-player Player Background)
  (place-image
- (Player-img Player)
+ (cond [(= 1 (Player-img Player)) (triangle 60 "solid" "brown")])
  (posn-x (Player-position Player))
  (posn-y (Player-position Player))
  Background))
@@ -99,18 +99,14 @@
                  )
            (if (< (Weapon-x (Player-Weapon Player)) (posn-x (Player-position Player))) (+ angle 180) angle))] ))
 
-;Player -> Player
-(define (spiegläääää Player img)
-  (cond [(< (Weapon-y (Player-Weapon Player)) (posn-y (Player-position Player)))
-         (flip-vertical img)]
-        [else img])) 
+
         
 
 ; Player, Image -> Image
 (define (draw-gun Player img)
-  (place-image (rotate (WeaponAngle Player) (Weapon-img (Player-Weapon Player)))
-               (+ (posn-x (Player-position Player)) 0);(Weapon-x (Player-Weapon Player)))
-               (+ (posn-y (Player-position Player)) 0);(Weapon-y (Player-Weapon Player)))
+  (place-image (rotate (WeaponAngle Player) (cond [(= 1 (Weapon-img (Player-Weapon Player))) GUN] ))
+               (+ (posn-x (Player-position Player)) 0)
+               (+ (posn-y (Player-position Player)) 0)
                img))
 
 
