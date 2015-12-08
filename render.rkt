@@ -53,31 +53,7 @@
                                               100
                                               (make-posn (random WIDTH) (- HEIGHT 30))
                                               9000))
-                                (list
-                                 (make-Projectile 1
-                                                  (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn 2 3)
-                                                  9000)
-                                 (make-Projectile 1
-                                                  (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn -5 0)
-                                                  9000)
-                                 (make-Projectile 1
-                                                  (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn 0.3 0)
-                                                  9000)
-                                 (make-Projectile 1
-                                                  (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn -1 1)
-                                                  9000)
-                                 (make-Projectile 1
-                                                  (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn 2 -5)
-                                                  9000)
-                                 (make-Projectile 1
-                                                  (make-posn (random WIDTH) (random HEIGHT))
-                                                  (make-posn 2 -3)
-                                                  9000))
+                                '()
                                 0))
 
 
