@@ -1,6 +1,7 @@
 #lang racket
 
 (require "datadefinitions.rkt")
+(define ZSPEED #i1)
 
 (define PROJECTILE-SPEED 1)
 ; update zombies
@@ -24,6 +25,23 @@
        list))
 
 
+;
+(define (zombie-direction Zombie Player)
+ (normalise
+  (make-posn (- (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie)))
+             (- (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie))))))
+
+; Zombies, Player -> Zombies
+; Moves Zombies in the players direction
+(define (update-zombies Zombies Player)
+  (map (lambda (Zombie) (local [(define direction (zombie-direction Zombie Player))]
+                          (make-Zombie
+                           (Zombie-img Zombie)
+                           (Zombie-health Zombie)
+                          (make-posn (+ (posn-x (Zombie-position Zombie)) (* ZSPEED (posn-x direction)))
+                                     (+ (posn-y (Zombie-position Zombie)) (* ZSPEED (posn-y direction))))
+                          (Zombie-damage Zombie))))
+       Zombies))
 
 
 
@@ -31,7 +49,7 @@
 ; GameState -> GameState
 (define (update state)
   (make-GameState (GameState-player state)
-                  (GameState-Zombies state)
+                  (update-zombies (GameState-Zombies state) (GameState-player state))
                   (update-projectiles (GameState-Projectiles state))
                   (GameState-Score state)))
 

@@ -50,6 +50,14 @@
                   (GameState-Score state))))
 
 
+; posn -> posn
+; Normalize vector
+(define (normalise vec)
+  (cond [(= 0 (posn-x vec) (posn-y vec)) (make-posn 0 0)]
+        [else
+         (make-posn (round (/ (posn-x vec) (sqrt (+ (sqr (posn-x vec)) (sqr (posn-y vec))))))
+                    (round (/ (posn-y vec) (sqrt (+ (sqr (posn-x vec)) (sqr (posn-y vec)))))))]))
+
 
 
 
