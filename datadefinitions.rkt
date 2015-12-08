@@ -35,7 +35,7 @@
 (define-struct GameState [player Zombies Projectiles Score] #:prefab)
 
 
-; Usefulf funnctions for GameState
+; Usefulf functions for GameState
 
 ; update-player-position: Gamestate Number Number -> GameState
 ; Takes a GamState and updates Player-position

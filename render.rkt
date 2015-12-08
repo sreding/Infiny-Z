@@ -8,7 +8,10 @@
 (define HEIGHT 720)
 (define WIDTH 1280)
 (define BACKGROUND (empty-scene WIDTH HEIGHT))
-(define GUN (scale (/ 1 15)(bitmap/file "GUN.png")))
+(define GUN (scale (/ 1 15)(bitmap/file "Gun.png")))
+(define ZOMBIE1 (bitmap/file "Zombie.png"))
+(define PLAYER1 (bitmap/file "Player.png"))
+(define ZSPEED 10)
 ;Example colapsed for visibility
 (define Example (make-GameState (make-Player 1
                                              100
@@ -18,15 +21,15 @@
                                                           0
                                                           9000))
                                 (list
-                                 (make-Zombie (rectangle 30 60 "solid" "red")
+                                 (make-Zombie ZOMBIE1
                                               100
                                               (make-posn (random WIDTH) (- HEIGHT 30))
                                               9000)
-                                 (make-Zombie (rectangle 30 60 "solid" "red")
+                                 (make-Zombie ZOMBIE1
                                               100
                                               (make-posn (random WIDTH) (- HEIGHT 30))
                                               9000)
-                                 (make-Zombie (rectangle 30 60 "solid" "red")
+                                 (make-Zombie ZOMBIE1
                                               100
                                               (make-posn (random WIDTH) (- HEIGHT 30))
                                               9000))
@@ -77,11 +80,33 @@
 
 
 
+; Decides in what direction a zombie should move
+; Basically a helper function for a function yet to come that takes a list of zombies and a player.
+; Zombie Player --> Zombie (player possibly needed as output as well even if he doesnt change??)
+
+(define (move-towards Zombie Player)
+  (cond [(< (posn-x Zombie) (posn-x Player))
+         (make-Zombie (Zombie-img Zombie) (Zombie-health Zombie)
+                      (make-posn (posn-y Zombie) (+ (posn-x Zombie) ZSPEED)) (Zombie-damage Zombie))]
+
+        [(> (posn-x Zombie) (posn-x Player)) 
+                                             (make-Zombie (Zombie-img Zombie) (Zombie-health Zombie)
+                      (make-posn (posn-y Zombie) (- (posn-x Zombie) ZSPEED)) (Zombie-damage Zombie))]
+        
+        [(< (posn-x Zombie) (posn-x Player)) 
+                                             (make-Zombie (Zombie-img Zombie) (Zombie-health Zombie)
+                      (make-posn (+ (posn-y Zombie) ZSPEED) (posn-x Zombie)) (Zombie-damage Zombie))]
+        [(> (posn-x Zombie) (posn-x Player)) 
+                                             (make-Zombie (Zombie-img Zombie) (Zombie-health Zombie)
+                      (make-posn (- (posn-y Zombie) ZSPEED) (posn-x Zombie)) (Zombie-damage Zombie))]))
+  
+
+
 ; Player + background-> Img
 ; Places player into background
 (define (draw-player Player Background)
  (place-image
- (cond [(= 1 (Player-img Player)) (triangle 60 "solid" "brown")])
+ (cond [(= 1 (Player-img Player)) PLAYER1])
  (posn-x (Player-position Player))
  (posn-y (Player-position Player))
  Background))
@@ -91,11 +116,11 @@
   (cond [(and (= (posn-x (Player-position Player)) (Weapon-x (Player-Weapon Player))) (> (posn-y (Player-position Player)) (Weapon-y (Player-Weapon Player))))  90]
         [(= (posn-x (Player-position Player)) (Weapon-x (Player-Weapon Player))) 270]
         [(not (= (posn-x (Player-position Player)) (Weapon-x (Player-Weapon Player))))
-         (local ((define angle (* (/ 360 (* 2 pi))
+         (local ((define angle (+ 270 (* (/ 360 (* 2 pi))
             (atan
              (/
               (- (Weapon-y (Player-Weapon Player)) (posn-y (Player-position Player)))
-              (-  (posn-x (Player-position Player)) (Weapon-x (Player-Weapon Player)))))))
+              (-  (posn-x (Player-position Player)) (Weapon-x (Player-Weapon Player))))))))
                  )
            (if (< (Weapon-x (Player-Weapon Player)) (posn-x (Player-position Player))) (+ angle 180) angle))] ))
 
