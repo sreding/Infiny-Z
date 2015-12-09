@@ -68,10 +68,20 @@
                        (check-collision Zombie (rest list))))]))
           (define (check-collision-1-arg Zombie)
             (not (check-collision Zombie (GameState-Projectiles state))))]
-    (make-GameState (GameState-player state)
-                    (filter check-collision-1-arg (GameState-Zombies state))
-                    (GameState-Projectiles state)
-                    (GameState-Score state))))                           
+                    (filter check-collision-1-arg (GameState-Zombies state))))
+
+(define (Projectile-hit-detection state)
+  (local [; retrns true if zombie is hit
+          (define (check-collision Projectile list)
+            (cond [(empty? list) #false]
+                  [else (local [ (define x (posn-x (Zombie-position (first list))))
+                                 (define y (posn-y (Zombie-position (first list))))]
+                   (or (and (< (- x 30) (posn-x (Projectile-position Projectile)) (+ x 30))
+                            (< (- y 30) (posn-y (Projectile-position Projectile)) (+ y 30)))
+                       (check-collision Projectile (rest list))))]))
+          (define (check-collision-1-arg Projectile)
+            (not (check-collision Projectile (GameState-Zombies state))))]
+                    (filter check-collision-1-arg (GameState-Projectiles state))))
 
 
 ; updates Player in direction
@@ -87,11 +97,11 @@
 
 ; GameState -> GameState
 (define (update state)
-  (Z-hit-detection
+  
   (make-GameState (update-player (GameState-player state))
-                  (update-zombies (GameState-Zombies state) (GameState-player state))
-                  (update-projectiles (GameState-Projectiles state))
-                  (GameState-Score state))))
+                  (update-zombies (Z-hit-detection state) (GameState-player state))
+                  (update-projectiles (Projectile-hit-detection state))
+                  (GameState-Score state)))
 
 
 (provide (all-defined-out))
