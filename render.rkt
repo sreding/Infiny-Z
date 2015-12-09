@@ -7,7 +7,8 @@
 
 
 (define BACKGROUND (empty-scene WIDTH HEIGHT))
-(define GUN (scale (/ 1 15)(bitmap/file "Gun.png")))
+(define GUN (bitmap/file "Gun.png"))
+;(define GUN (scale (/ 1 15)(bitmap/file "Gun.png")))
 (define ZOMBIE1 (bitmap/file "Zombie.png"))
 (define PLAYER1 (bitmap/file "Player.png"))
 
