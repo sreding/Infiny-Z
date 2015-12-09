@@ -59,12 +59,12 @@
 
 ; Zombies, img -> image
 ; Takes a List of Zombie and places it on the image
-(define (draw-zombies Zombies Image)
+(define (draw-zombies Zombies Player Image)
   (cond [(empty? Zombies) Image]
-        [else (place-image  (Zombie-img (first Zombies))
+        [else (place-image  (rotate-towards (Zombie-img (first Zombies)) (first Zombies) Player)
                             (posn-x (Zombie-position (first Zombies)))
                             (posn-y (Zombie-position (first Zombies)))
-                            (draw-zombies (rest Zombies) Image))]))
+                            (draw-zombies (rest Zombies) Player Image))]))
 
 ; Projectiles --> image
 (define (draw-projectiles Projectiles Image)
@@ -75,10 +75,18 @@
                             (draw-projectiles (rest Projectiles) Image))]))
 
 
+; rotate-towards : Image -> Image
+; Takes a Zombie and rotates it towards the player
 
-
-  
-
+(define (rotate-towards img Zombie Player)
+  (local ((define angle (+ 90 (* (/ 360 (* 2 pi))
+            (atan
+             (/
+              (- (posn-y (Zombie-position Zombie)) (posn-y (Player-position Player)))
+              (-  (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))))))))
+                 )
+    (rotate angle img))) 
+    
 
 ; Player + background-> Img
 ; Places player into background
@@ -120,7 +128,7 @@
 (draw-projectiles
  (GameState-Projectiles state)
  (draw-zombies
-  (GameState-Zombies state)
+  (GameState-Zombies state) (GameState-player state)
   (draw-player
    (GameState-player state)
    BACKGROUND)))))
