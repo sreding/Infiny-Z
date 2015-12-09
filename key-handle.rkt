@@ -1,6 +1,6 @@
 #lang racket
 
-(define SPEED 20)
+
 
 
 
@@ -16,6 +16,8 @@
                                       (Player-health (GameState-player state))
                                       (make-posn (- (posn-x (Player-position (GameState-player state))) SPEED)
                                                  (posn-y (Player-position (GameState-player state))))
+                                      (make-posn -1
+                                                 (posn-y (Player-direction (GameState-player state))))
                                       (Player-Weapon (GameState-player state))
                                        )
                          (GameState-Zombies state)
@@ -27,6 +29,8 @@
                                       (Player-health (GameState-player state))
                                       (make-posn (+ (posn-x (Player-position (GameState-player state))) SPEED)
                                                  (posn-y (Player-position (GameState-player state))))
+                                      (make-posn 1
+                                                 (posn-y (Player-direction (GameState-player state))))
                                       (Player-Weapon (GameState-player state))
                                        )
                          (GameState-Zombies state)
@@ -39,6 +43,8 @@
                                       
                                         (make-posn (posn-x (Player-position (GameState-player state)))
                                                  (- (posn-y (Player-position (GameState-player state))) SPEED))
+                                        (make-posn (posn-x (Player-direction (GameState-player state)))
+                                                   -1)
                                         (Player-Weapon (GameState-player state)))
                          (GameState-Zombies state)
                          (GameState-Projectiles state)
@@ -48,6 +54,8 @@
                                       (Player-health (GameState-player state))
                                       (make-posn (posn-x (Player-position (GameState-player state)))
                                                  (+ (posn-y (Player-position (GameState-player state))) SPEED))
+                                      (make-posn (posn-y (Player-direction (GameState-player state)))
+                                                 1)
                                       (Player-Weapon (GameState-player state)))
                          (GameState-Zombies state)
                          (GameState-Projectiles state)

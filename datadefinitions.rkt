@@ -9,7 +9,8 @@
 ; img - Image
 ; health - integer
 ; position - posn
-(define-struct Player [img health position Weapon] #:prefab)
+; direction is one of (1,0), (0,1), (-1,0), (0,-1), (0,0)
+(define-struct Player [img health position direction Weapon] #:prefab)
 
 ; Weapon
 ; img - Image
@@ -35,19 +36,7 @@
 (define-struct GameState [player Zombies Projectiles Score] #:prefab)
 
 
-; Usefulf functions for GameState
 
-; update-player-position: Gamestate Number Number -> GameState
-; Takes a GamState and updates Player-position
-(define (update-player-position state x y)
-  (local  [(define PrevPlayer (GameState-player state))]
-  (make-GameState (make-Player (Player-img PrevPlayer)
-                               (Player-health PrevPlayer)
-                               (make-posn x y)
-                               (Player-Weapon PrevPlayer))
-                  (GameState-Zombies state)
-                  (GameState-Projectiles state)
-                  (GameState-Score state))))
 
 
 ; posn -> posn
@@ -55,13 +44,13 @@
 (define (normalise vec)
   (cond [(= 0 (posn-x vec) (posn-y vec)) (make-posn 0 0)]
         [else
-         (make-posn (round (/ (posn-x vec) (sqrt (+ (sqr (posn-x vec)) (sqr (posn-y vec))))))
-                    (round (/ (posn-y vec) (sqrt (+ (sqr (posn-x vec)) (sqr (posn-y vec)))))))]))
+         (make-posn  (/ (posn-x vec) (sqrt (+ (sqr (posn-x vec)) (sqr (posn-y vec)))))
+                     (/ (posn-y vec) (sqrt (+ (sqr (posn-x vec)) (sqr (posn-y vec))))))]))
 
-
+; global constants
+(define SPEED 5)
 
 
 
 (provide (all-defined-out))
 
-;This is a test to see how commits work

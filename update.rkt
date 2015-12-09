@@ -43,12 +43,20 @@
                           (Zombie-damage Zombie))))
        Zombies))
 
-
+; updates Player in direction
+; Player -> Player
+(define (update-player Player)
+  (make-Player (Player-img Player)
+               (Player-health Player)
+               (make-posn (+ (* SPEED (posn-x (Player-direction Player))) (posn-x (Player-position Player)))
+                          (+ (* SPEED (posn-y (Player-direction Player))) (posn-y (Player-position Player))))
+               (Player-direction Player)
+               (Player-Weapon Player)))
 
 
 ; GameState -> GameState
 (define (update state)
-  (make-GameState (GameState-player state)
+  (make-GameState (update-player (GameState-player state))
                   (update-zombies (GameState-Zombies state) (GameState-player state))
                   (update-projectiles (GameState-Projectiles state))
                   (GameState-Score state)))

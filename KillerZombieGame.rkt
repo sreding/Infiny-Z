@@ -11,6 +11,7 @@
 (require "key-handle.rkt")
 (require "stop-conditions.rkt")
 (require "update.rkt")
+(require "release-key.rkt")
  
 
 ; constants

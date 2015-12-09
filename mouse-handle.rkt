@@ -23,6 +23,7 @@
                    (Player-img (GameState-player state))
                    (Player-health (GameState-player state)) 
                    (Player-position (GameState-player state))
+                   (Player-direction (GameState-player state))
                    (make-Weapon (Weapon-img (Player-Weapon (GameState-player state)))
                                 x
                                 y
