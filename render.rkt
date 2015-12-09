@@ -11,7 +11,7 @@
 
 ;(define GUN (scale (/ 1 15)(bitmap/file "Gun.png")))
 
-(define ZOMBIE1 (bitmap/file "Zombie.png"))
+(define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
 (define PLAYER1 (bitmap/file "Player.png"))
 
 ;Example colapsed for visibility
@@ -71,7 +71,7 @@
 ; Projectiles --> image
 (define (draw-projectiles Projectiles Image)
   (cond [(empty? Projectiles) Image]
-        [else (place-image (cond [(= 1 (Projectile-img (first Projectiles))) (circle 10 "solid" "green")]) 
+        [else (place-image (cond [(= 1 (Projectile-img (first Projectiles))) (circle 5 "solid" "red")]) 
                             (posn-x (Projectile-position (first Projectiles)))
                             (posn-y (Projectile-position (first Projectiles)))
                             (draw-projectiles (rest Projectiles) Image))]))
