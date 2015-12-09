@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 ("6.2.1" ("b3c8da54b5be4e58ab7e703e1a8fa92214ad032c" . "7c9435779f750250d84dec04ce17a8dfdba36654") #"/Users/alexandercamenzind/Desktop/PF1Project/datadefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
+=======
+<<<<<<< Updated upstream
+("6.2.1" ("ad989e9f496c04e96050cec6b3f038df36be023b" . "7c9435779f750250d84dec04ce17a8dfdba36654") #"/Users/alexandercamenzind/Desktop/PF1Project/datadefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
+=======
+("6.2.1" ("0b6770ea861b250b22b3b671a7ad4e10d7563705" . "3af63f5aee3a5a34ca0c6b5edc016912fab3da59") (collects #"errortrace" #"errortrace-key.rkt") #"/Users/simonreding/GitHub/FinalProjectZombies/datadefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
+>>>>>>> Stashed changes
+>>>>>>> origin/master
