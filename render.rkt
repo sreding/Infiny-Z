@@ -5,7 +5,8 @@
 (require 2htdp/image)
 (require "DataDefinitions.rkt")
 
-(define BACKGROUND (empty-scene WIDTH HEIGHT))
+;(define BACKGROUND (empty-scene WIDTH HEIGHT))
+(define BACKGROUND (bitmap/file "Map.png"))
 
 (define GUN (rotate 90 (bitmap/file "Gun.png")))
 
