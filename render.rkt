@@ -85,7 +85,9 @@
               (- (posn-y (Zombie-position Zombie)) (posn-y (Player-position Player)))
               (-  (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))))))))
                  )
-    (rotate angle img))) 
+    (cond
+      [(> (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))) (rotate (+ 180 angle) img)]
+      [(< (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))) (rotate angle img)]))) 
     
 
 ; Player + background-> Img
