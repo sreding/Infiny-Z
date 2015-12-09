@@ -5,10 +5,12 @@
 (require 2htdp/image)
 (require "DataDefinitions.rkt")
 
-
 (define BACKGROUND (empty-scene WIDTH HEIGHT))
+
 (define GUN (rotate 90 (bitmap/file "Gun.png")))
+
 ;(define GUN (scale (/ 1 15)(bitmap/file "Gun.png")))
+
 (define ZOMBIE1 (bitmap/file "Zombie.png"))
 (define PLAYER1 (bitmap/file "Player.png"))
 
@@ -66,7 +68,6 @@
                             (posn-x (Zombie-position (first Zombies)))
                             (posn-y (Zombie-position (first Zombies)))
                             (draw-zombies (rest Zombies) Player Image))]))
-
 ; Projectiles --> image
 (define (draw-projectiles Projectiles Image)
   (cond [(empty? Projectiles) Image]
@@ -74,7 +75,6 @@
                             (posn-x (Projectile-position (first Projectiles)))
                             (posn-y (Projectile-position (first Projectiles)))
                             (draw-projectiles (rest Projectiles) Image))]))
-
 
 ; rotate-towards : Image -> Image
 ; Takes a Zombie and rotates it towards the player
@@ -89,7 +89,12 @@
     (cond
       [(> (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))) (rotate (+ 180 angle) img)]
       [(< (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))) (rotate angle img)]))) 
-    
+
+
+
+
+  
+
 
 ; Player + background-> Img
 ; Places player into background
@@ -135,6 +140,7 @@
   (draw-player
    (GameState-player state)
    BACKGROUND)))))
+
 
 
 
