@@ -12,7 +12,7 @@
 
 ;(define GUN (scale (/ 1 15)(bitmap/file "Gun.png")))
 
-(define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
+
 (define PLAYER1 (bitmap/file "Player.png"))
 
 ;Example colapsed for visibility

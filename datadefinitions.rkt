@@ -49,8 +49,9 @@
 
 ; global constants
 (define SPEED 5)
-(define HEIGHT 720)
+(define HEIGHT 961)
 (define WIDTH 1280)
+(define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
 
 
 (provide (all-defined-out))

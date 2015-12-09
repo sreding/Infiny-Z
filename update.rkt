@@ -80,6 +80,16 @@
 (define (zombie-dead Zombies)
   (filter (lambda (Zombie) (> (Zombie-health Zombie) 0)) Zombies))
 
+; Zombies -> Zombies
+; add random zombies
+(define (add-random-zombies Zombies)
+  (local [(define rand-nr (random 15))]
+    (cond [(= 0 rand-nr) (cons (make-Zombie ZOMBIE1
+                                      100
+                                      (make-posn (random WIDTH) (random HEIGHT))
+                                      9000) Zombies)]
+          [else Zombies])))
+
 ; GameState -> Projectiles
 ; 
 (define (Projectile-hit-detection state)
@@ -111,7 +121,7 @@
 (define (update state)
   
   (make-GameState (update-player (GameState-player state))
-                  (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state)))
+                  (add-random-zombies (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state))))
                   (update-projectiles (Projectile-hit-detection state))
                   (GameState-Score state)))
 
