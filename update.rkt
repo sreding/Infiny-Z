@@ -55,6 +55,25 @@
                           (Zombie-damage Zombie))))
        Zombies))
 
+; GameState -> GameState
+; Tests if a projetile hits a zombie deletes the projectile and calculates damage
+(define (Z-hit-detection state)
+  (local [; retrns true if zombie is hit
+          (define (check-collision Zombie list)
+            (cond [(empty? list) #false]
+                  [else (local [ (define x (posn-x (Zombie-position Zombie)))
+                                 (define y (posn-y (Zombie-position Zombie)))]
+                   (or (and (< (- x 30) (posn-x (Projectile-position (first list))) (+ x 30))
+                            (< (- y 30) (posn-y (Projectile-position (first list))) (+ y 30)))
+                       (check-collision Zombie (rest list))))]))
+          (define (check-collision-1-arg Zombie)
+            (not (check-collision Zombie (GameState-Projectiles state))))]
+    (make-GameState (GameState-player state)
+                    (filter check-collision-1-arg (GameState-Zombies state))
+                    (GameState-Projectiles state)
+                    (GameState-Score state))))                           
+
+
 ; updates Player in direction
 ; Player -> Player
 (define (update-player Player)
@@ -68,10 +87,11 @@
 
 ; GameState -> GameState
 (define (update state)
+  (Z-hit-detection
   (make-GameState (update-player (GameState-player state))
                   (update-zombies (GameState-Zombies state) (GameState-player state))
                   (update-projectiles (GameState-Projectiles state))
-                  (GameState-Score state)))
+                  (GameState-Score state))))
 
 
 (provide (all-defined-out))
