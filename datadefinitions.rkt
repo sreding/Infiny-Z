@@ -49,7 +49,8 @@
 
 ; global constants
 (define SPEED 5)
-
+(define HEIGHT 720)
+(define WIDTH 1280)
 
 
 (provide (all-defined-out))

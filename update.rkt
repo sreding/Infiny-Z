@@ -3,7 +3,7 @@
 (require "datadefinitions.rkt")
 (define ZSPEED #i1)
 
-(define PROJECTILE-SPEED 1)
+(define PROJECTILE-SPEED 10)
 ; update zombies
 ; update projectiles
 ; hit detection
@@ -16,7 +16,7 @@
 ; List<Projectile> -> List<Projectile>
 ; updates the projectiles position accortingto their direction
 ; position = position +speed*direction
-(define (update-projectiles list)
+(define (update-position-projectiles list)
   (map (lambda (x) (make-Projectile (Projectile-img x)
                                     (make-posn (+ (posn-x (Projectile-position x)) (* PROJECTILE-SPEED (posn-x (Projectile-direction x))))
                                                (+ (posn-y (Projectile-position x)) (* PROJECTILE-SPEED (posn-y (Projectile-direction x)))))
@@ -25,7 +25,19 @@
        list))
 
 
-;
+; Projectiles -> Projectiles
+(define (delete-projectiles Projectiles)
+  (filter (lambda (Projectile)
+            (and (< 0 (posn-x (Projectile-position Projectile)) WIDTH)
+                 (< 0  (posn-y (Projectile-position Projectile)) HEIGHT)))
+          Projectiles))
+
+; Projectiles -> Projectiles
+(define (update-projectiles Projectiles)
+  (delete-projectiles (update-position-projectiles Projectiles)))
+
+; Zombie, Player -> Posn
+; Returns the vector between Zombie and Player 
 (define (zombie-direction Zombie Player)
  (normalise
   (make-posn (- (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie)))

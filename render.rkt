@@ -5,8 +5,7 @@
 (require 2htdp/image)
 (require "DataDefinitions.rkt")
 
-(define HEIGHT 720)
-(define WIDTH 1280)
+
 (define BACKGROUND (empty-scene WIDTH HEIGHT))
 (define GUN (scale (/ 1 15)(bitmap/file "Gun.png")))
 (define ZOMBIE1 (bitmap/file "Zombie.png"))
