@@ -2,7 +2,7 @@
 
 (require "datadefinitions.rkt")
 (define ZSPEED #i1)
-
+(define WEAPONDAMAGE 10)
 (define PROJECTILE-SPEED 10)
 ; update zombies
 ; update projectiles
@@ -55,8 +55,8 @@
                           (Zombie-damage Zombie))))
        Zombies))
 
-; GameState -> GameState
-; Tests if a projetile hits a zombie deletes the projectile and calculates damage
+; GameState -> Zombies
+; Tests if a projetile hits a zombie and reduces the Zombies health
 (define (Z-hit-detection state)
   (local [; retrns true if zombie is hit
           (define (check-collision Zombie list)
@@ -68,8 +68,20 @@
                        (check-collision Zombie (rest list))))]))
           (define (check-collision-1-arg Zombie)
             (not (check-collision Zombie (GameState-Projectiles state))))]
-                    (filter check-collision-1-arg (GameState-Zombies state))))
+                    (map (lambda (Zombie) (if (check-collision-1-arg Zombie)  Zombie
+                                              (make-Zombie (Zombie-img Zombie)
+                                                           (- (Zombie-health Zombie) WEAPONDAMAGE)
+                                                           (Zombie-position Zombie)
+                                                           (Zombie-damage Zombie))))
+                                              (GameState-Zombies state))))
 
+; Zombies -> Zombies
+; Deletes all Zombies with Zombie-health < 0
+(define (zombie-dead Zombies)
+  (filter (lambda (Zombie) (> (Zombie-health Zombie) 0)) Zombies))
+
+; GameState -> Projectiles
+; 
 (define (Projectile-hit-detection state)
   (local [; retrns true if zombie is hit
           (define (check-collision Projectile list)
@@ -99,7 +111,7 @@
 (define (update state)
   
   (make-GameState (update-player (GameState-player state))
-                  (update-zombies (Z-hit-detection state) (GameState-player state))
+                  (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state)))
                   (update-projectiles (Projectile-hit-detection state))
                   (GameState-Score state)))
 
