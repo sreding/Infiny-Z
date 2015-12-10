@@ -1,1 +1,1 @@
-("6.2.1" ("19aeb3f5b88aba199244c7e81965f23d7d85e288" . "2710d47e351187e9c31a10ccac2ee2dfb0f56d8b") (collects #"2htdp" #"image.rkt") (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
+("6.2.1" ("3cc1528533d22c09ed506d12979db75e5588cc28" . "2710d47e351187e9c31a10ccac2ee2dfb0f56d8b") (collects #"2htdp" #"image.rkt") (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
