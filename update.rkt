@@ -120,13 +120,15 @@
 (define (update-player-position Player)
   (local [ (define x-plus-dx (+ (* SPEED (posn-x (Player-direction Player))) (posn-x (Player-position Player))))
            (define y-plus-dy (+ (* SPEED (posn-y (Player-direction Player))) (posn-y (Player-position Player))))
-           (define x (posn-x (Player-direction Player)))
-           (define y (posn-y (Player-direction Player)))]
+           (define x (posn-x (Player-position Player)))
+           (define y (posn-y (Player-position Player)))]
   (make-Player (Player-img Player)
                (Player-health Player)
-               (make-posn x-plus-dx
-                         y-plus-dy)
+               (make-posn  (if (obstacle-hit x-plus-dx y 1) x x-plus-dx)
+                           (if (obstacle-hit x y-plus-dy 1) y y-plus-dy))
                (Player-direction Player)
+               ;(make-posn (if (obstacle-hit x-plus-dx y 1) 0 (posn-x (Player-direction Player)))
+               ;           (if (obstacle-hit x y-plus-dy 1) 0 (posn-y (Player-direction Player))))
                (Player-Weapon Player))))
 
 ; Player Zombie -> Boolean
