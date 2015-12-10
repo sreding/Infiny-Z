@@ -1,1 +1,1 @@
-("6.2.1" ("f6c62d50139643a243b34a35d60fa779accdb332" . "77774706d8555a5f4f3d316ad7f98304b857d490") #"/Users/alexandercamenzind/Desktop/PF1Project/datadefinitions.rkt" (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
+("6.2.1" ("f6c62d50139643a243b34a35d60fa779accdb332" . "9a94cd3928b7925f9be7fd090f596b65dbae2485") #"/Users/simonreding/GitHub/FinalProjectZombies/datadefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
