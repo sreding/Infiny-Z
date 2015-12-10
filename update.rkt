@@ -44,19 +44,7 @@
              (- (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie))))))
 
 
-; Zombie Number -> Boolean
-;
-(define (obstacle-hit x y level)
-  (cond [(= level 1) (or(and (< 535 x 845)
-                           (< 395 y 675))
-                     (and (< 40 x 330)
-                           (< 400 y 676))
-                     (and (< 40 x 330)
-                           (< 400 y 676))
-                     (and (< 375 x 773)
-                           (< 0 y 261))
-                     (and (< 1173 x 1285)
-                           (< 30 y 300)))]))
+
 
 
 
@@ -71,7 +59,7 @@
                           (make-Zombie
                            (Zombie-img Zombie)
                            (Zombie-health Zombie)
-                           (make-posn (if (obstacle-hit x-plus-dx y 1) x  x-plus-dx)
+                           (make-posn (if (obstacle-hit x-plus-dx y 1) x x-plus-dx)
                                       (if (obstacle-hit x y-plus-dy 1) y y-plus-dy))
                            (Zombie-damage Zombie))))
        Zombies))
@@ -104,7 +92,7 @@
 ; Zombies -> Zombies
 ; add random zombies
 (define (add-random-zombies Zombies)
-  (local [(define rand-nr (random 15))]
+  (local [(define rand-nr (random 30))]
     (cond [(= 0 rand-nr) (cons (make-Zombie ZOMBIE1
                                       100
                                       (make-posn 1210 590)
@@ -130,12 +118,16 @@
 ; updates Player in direction
 ; Player -> Player
 (define (update-player-position Player)
+  (local [ (define x-plus-dx (+ (* SPEED (posn-x (Player-direction Player))) (posn-x (Player-position Player))))
+           (define y-plus-dy (+ (* SPEED (posn-y (Player-direction Player))) (posn-y (Player-position Player))))
+           (define x (posn-x (Player-direction Player)))
+           (define y (posn-y (Player-direction Player)))]
   (make-Player (Player-img Player)
                (Player-health Player)
-               (make-posn (+ (* SPEED (posn-x (Player-direction Player))) (posn-x (Player-position Player)))
-                          (+ (* SPEED (posn-y (Player-direction Player))) (posn-y (Player-position Player))))
+               (make-posn x-plus-dx
+                         y-plus-dy)
                (Player-direction Player)
-               (Player-Weapon Player)))
+               (Player-Weapon Player))))
 
 ; Player Zombie -> Boolean
 ; returns #true if player is hit

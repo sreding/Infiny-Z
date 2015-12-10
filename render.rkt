@@ -18,7 +18,8 @@
 ;Example colapsed for visibility
 (define Example (make-GameState (make-Player 1
                                              100
-                                             (make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
+                                             ;(make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
+                                             (make-posn 100 100)
                                              (make-posn 0 0)
                                              (make-Weapon 1
                                                           0
