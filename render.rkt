@@ -88,6 +88,13 @@
               (-  (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))))))))
                  )
     (cond
+      [(and (> (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie)))
+            (= (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie))))
+       (rotate 180 img)]
+      [(and (< (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie)))
+            (= (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie))))
+       (rotate 0 img)]
+
       [(> (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))) (rotate (+ 180 angle) img)]
       [(< (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))) (rotate angle img)]))) 
 
