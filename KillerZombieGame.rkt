@@ -40,6 +40,7 @@
             [on-key keyhandler]
             [on-tick update]
             [on-release release]
-            [on-mouse mouse-handle]))
+            [on-mouse mouse-handle]
+            [stop-when sop]))
 
 

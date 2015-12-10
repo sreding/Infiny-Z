@@ -129,7 +129,7 @@
 
 ; updates Player in direction
 ; Player -> Player
-(define (update-player Player)
+(define (update-player-position Player)
   (make-Player (Player-img Player)
                (Player-health Player)
                (make-posn (+ (* SPEED (posn-x (Player-direction Player))) (posn-x (Player-position Player)))
@@ -137,11 +137,35 @@
                (Player-direction Player)
                (Player-Weapon Player)))
 
+; Player Zombie -> Boolean
+; returns #true if player is hit
+(define (player-hit Player Zombie)
+  (local [(define x (posn-x (Player-position Player)))
+          (define y (posn-y (Player-position Player)))
+          (define Zx (posn-x (Zombie-position Zombie)))
+          (define Zy (posn-y (Zombie-position Zombie)))]
+  (and (< (- x 30) Zx (+ x 30))
+                (< (- y 30) Zy (+ y 30)))))
+
+; Player Zombies -> Player
+; Calculates the damage a player takes from a zombie
+(define (damage-calculation Player Zombies)
+  (cond [(empty? Zombies) Player]
+        [else (damage-calculation (make-Player (Player-img Player)
+                      (if (player-hit Player (first Zombies)) (- (Player-health Player) (Zombie-damage (first Zombies))) (Player-health Player))
+                      (Player-position Player)
+                      (Player-direction Player)
+                      (Player-Weapon Player)) (rest Zombies))]))
+ 
+ 
+; Player -> Player
+(define (update-player Player Zombies)
+  (update-player-position (damage-calculation Player Zombies)))
+
 
 ; GameState -> GameState
 (define (update state)
-  
-  (make-GameState (update-player (GameState-player state))
+  (make-GameState (update-player (GameState-player state) (GameState-Zombies state))
                   (add-random-zombies (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state))))
                   (update-projectiles (Projectile-hit-detection state))
                   (GameState-Score state)))

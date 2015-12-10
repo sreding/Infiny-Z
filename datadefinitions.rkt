@@ -52,7 +52,7 @@
 (define HEIGHT 961)
 (define WIDTH 1280)
 (define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
-
+(define ZOMBIE2 (rotate 90 (bitmap/file "Super-Zombie.png")))
 
 (provide (all-defined-out))
 
