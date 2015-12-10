@@ -48,9 +48,10 @@
                      (/ (posn-y vec) (sqrt (+ (sqr (posn-x vec)) (sqr (posn-y vec))))))]))
 
 ; global constants
+(define BACKGROUND (bitmap/file "Map.png"))
 (define SPEED 5)
-(define HEIGHT 961)
-(define WIDTH 1280)
+(define HEIGHT (image-height BACKGROUND))
+(define WIDTH (image-width BACKGROUND))
 (define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
 (define ZOMBIE2 (rotate 90 (bitmap/file "Super-Zombie.png")))
 
@@ -74,7 +75,11 @@
                      (and (< 860 x 946) ;Red Car
                            (< 0 y 109))
                      (and (< 1070 x 1175) ;5-O
-                           (< 385 y 560)))]))
+                           (< 385 y 560))
+                      (< x 30)
+                      (< (- WIDTH 30) x)
+                      (< y 30)
+                      (< (- HEIGHT 30) y))]))
 
 (provide (all-defined-out))
 
