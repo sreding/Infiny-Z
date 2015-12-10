@@ -81,22 +81,20 @@
 ; Takes a Zombie and rotates it towards the player
 
 (define (rotate-towards img Zombie Player)
-  (local ((define angle (+ 90 (* (/ 360 (* 2 pi))
+  (local [(define angle (+ 90 (* (/ 360 (* 2 pi))
             (atan
              (/
               (- (posn-y (Zombie-position Zombie)) (posn-y (Player-position Player)))
-              (-  (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))))))))
-                 )
+              (if (= 0 (-  (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie)))) 1 (-  (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))))))))
+                 )]
     (cond
-      [(and (> (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie)))
-            (= (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie))))
-       (rotate 180 img)]
-      [(and (< (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie)))
-            (= (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie))))
-       (rotate 0 img)]
-
       [(> (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))) (rotate (+ 180 angle) img)]
-      [(< (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))) (rotate angle img)]))) 
+      [(< (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))) (rotate angle img)]
+       [(and (> (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie)))
+            (= (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie))))
+       (rotate 180 img)]
+      [(= (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie)))
+       img]))) 
 
 
 

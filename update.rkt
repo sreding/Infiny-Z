@@ -1,7 +1,7 @@
 #lang racket
 
 (require "datadefinitions.rkt")
-(define ZSPEED #i1)
+(define ZSPEED #i10)
 (define WEAPONDAMAGE 10)
 (define PROJECTILE-SPEED 10)
 ; update zombies
@@ -43,16 +43,29 @@
   (make-posn (- (posn-x (Player-position Player)) (posn-x (Zombie-position Zombie)))
              (- (posn-y (Player-position Player)) (posn-y (Zombie-position Zombie))))))
 
+
+; Zombie Number -> Boolean
+;
+(define (obstacle-hit x y level)
+  (cond [(= level 1)  (and (< 400 x 800)
+                           (< 400 y 800))]))
+
+
+
 ; Zombies, Player -> Zombies
 ; Moves Zombies in the players direction
 (define (update-zombies Zombies Player)
-  (map (lambda (Zombie) (local [(define direction (zombie-direction Zombie Player))]
+  (map (lambda (Zombie) (local [(define direction (zombie-direction Zombie Player))
+                                (define x-plus-dx (+ (posn-x (Zombie-position Zombie)) (* ZSPEED (posn-x direction))))
+                                (define y-plus-dy (+ (posn-y (Zombie-position Zombie)) (* ZSPEED (posn-y direction))))
+                                (define x (posn-x (Zombie-position Zombie)))
+                                (define y (posn-y (Zombie-position Zombie)))]
                           (make-Zombie
                            (Zombie-img Zombie)
                            (Zombie-health Zombie)
-                          (make-posn (+ (posn-x (Zombie-position Zombie)) (* ZSPEED (posn-x direction)))
-                                     (+ (posn-y (Zombie-position Zombie)) (* ZSPEED (posn-y direction))))
-                          (Zombie-damage Zombie))))
+                           (make-posn (if (obstacle-hit x-plus-dx y 1) x  x-plus-dx)
+                                      (if (obstacle-hit x y-plus-dy 1) y y-plus-dy))
+                           (Zombie-damage Zombie))))
        Zombies))
 
 ; GameState -> Zombies
@@ -86,7 +99,7 @@
   (local [(define rand-nr (random 15))]
     (cond [(= 0 rand-nr) (cons (make-Zombie ZOMBIE1
                                       100
-                                      (make-posn (random WIDTH) (random HEIGHT))
+                                      (make-posn 1210 590)
                                       9000) Zombies)]
           [else Zombies])))
 
