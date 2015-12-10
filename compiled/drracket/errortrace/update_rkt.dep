@@ -1,1 +1,1 @@
-("6.2.1" ("673c48479c15bf5e9f2a41afaffeaffe02ebf9b2" . "856fa004b09dec5806c47e6b7e155a15a26dd8fb") (collects #"errortrace" #"errortrace-key.rkt") #"/Users/simonreding/GitHub/FinalProjectZombies/datadefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
+("6.2.1" ("fe448be9622e20f33a2e8405d04975e0fe74a6d0" . "9a94cd3928b7925f9be7fd090f596b65dbae2485") #"/Users/simonreding/GitHub/FinalProjectZombies/datadefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
