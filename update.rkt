@@ -47,8 +47,12 @@
 ; Zombie Number -> Boolean
 ;
 (define (obstacle-hit x y level)
-  (cond [(= level 1)  (and (< 400 x 800)
-                           (< 400 y 800))]))
+  (cond [(= level 1) (or(and (< 535 x 845)
+                           (< 395 y 675))
+                     (and (< 40 x 330)
+                           (< 400 y 676))
+                     (and (< 40 x 330)
+                           (< 400 y 676)))]))
 
 
 
