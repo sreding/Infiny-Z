@@ -171,11 +171,33 @@
                       (Player-position Player)
                       (Player-direction Player)
                       (Player-Weapon Player)) (rest Zombies))]))
- 
+; Player PowerUp -> boolean
+; returns #true if player hits a healt pack
+(define (health-pack? Player PowerUp)
+  (and (and (< (- (posn-x (PowerUp-position PowerUp)) 30) (posn-x (Player-position Player)) (+ (posn-x (PowerUp-position PowerUp)) 30))
+                                (< (- (posn-y (PowerUp-position PowerUp)) 30) (posn-y (Player-position Player)) (+ (posn-y (PowerUp-position PowerUp)) 30)))
+        (= 0 (PowerUp-nr PowerUp))))
+
+; Player PowerUps -> Player
+; Sets Player health to 100 if the player picks up a health pack
+(define (update-health? Player PowerUps)
+  (cond [(empty? PowerUps) #false]
+        [else (or (health-pack? Player (first PowerUps))
+                  (update-health? Player (rest PowerUps)))]))
+; Player PowerUps -> Player
+(define (update-health Player PowerUps)
+  (if (update-health? Player PowerUps)
+      (make-Player (Player-img Player)
+               100
+               (Player-position Player)
+               (Player-direction Player)
+               (Player-Weapon Player))
+      Player))
+      
  
 ; Player -> Player
-(define (update-player Player Zombies)
-  (update-player-position (damage-calculation Player Zombies)))
+(define (update-player Player Zombies PowerUps)
+  (update-player-position (update-health (damage-calculation Player Zombies) PowerUps)))
 
 ; GameState -> Boolean
 ; Returns #true if Player-health < 0
@@ -184,17 +206,19 @@
 
 ; PowerUps -> PowerUps
 (define (spawn-random-power-up PowerUps)
-  (local [(define rand-nr (random 200))
-          (define rand-nr2 (random 2))]
-    (cond [(= rand-nr 0) (cons (make-PowerUp (make-posn (random WIDTH)
-                                                        (random HEIGHT))
-                                             rand-nr2) PowerUps)]
+  (local [(define rand-nr (random 100))
+          (define rand-nr2 (random 2))
+          (define rand-x (random WIDTH))
+          (define rand-y (random HEIGHT))]
+    (cond [(and (not (obstacle-hit rand-x rand-y 1)) (= rand-nr 0))
+           (cons (make-PowerUp (make-posn rand-x rand-y)
+                               rand-nr2) PowerUps)]
           [else PowerUps])))
 
 ; PowerUps Player -> PowerUps
 (define (delete-powerups PowerUps Player)
-  (filter (lambda (x) (not (and (< (- (posn-x (Player-position Player)) 15) (posn-x (PowerUp-position x)) (+ (posn-x (Player-position Player)) 15))
-                           (< (- (posn-y (Player-position Player)) 15) (posn-y (PowerUp-position x)) (+ (posn-y (Player-position Player)) 15)))))
+  (filter (lambda (x) (not (and (< (- (posn-x (PowerUp-position x)) 30) (posn-x (Player-position Player)) (+ (posn-x (PowerUp-position x)) 30))
+                                (< (- (posn-y (PowerUp-position x)) 30) (posn-y (Player-position Player)) (+ (posn-y (PowerUp-position x)) 30)))))
             PowerUps))
                                              
 
@@ -203,7 +227,7 @@
   (cond [(game-over? state) Game-Over]
         [(= (GameState-Menue state) 10) state]
     [(= (GameState-Menue state) 5)
-  (make-GameState (update-player (GameState-player state) (GameState-Zombies state))
+  (make-GameState (update-player (GameState-player state) (GameState-Zombies state) (GameState-PowerUps state))
                   (add-random-zombies (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state))))
                   (update-projectiles (Projectile-hit-detection state))
                   (delete-powerups (spawn-random-power-up (GameState-PowerUps state) ) (GameState-player state))

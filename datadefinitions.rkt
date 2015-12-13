@@ -65,7 +65,7 @@
 (define WIDTH (image-width BACKGROUND))
 (define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
 (define ZOMBIE2 (rotate 90 (bitmap/file "Super-Zombie.png")))
-(define HEALTH (square 30 "solid" "red"))
+(define HEALTH (bitmap/file "MedPU.png"))
 
 ;Initial State Menue
 (define InitState (make-GameState (make-Player 1
