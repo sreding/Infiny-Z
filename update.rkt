@@ -172,10 +172,13 @@
 
 ; GameState -> GameState
 (define (update state)
+  (cond [(= (GameState-Menue state) 5)
   (make-GameState (update-player (GameState-player state) (GameState-Zombies state))
                   (add-random-zombies (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state))))
                   (update-projectiles (Projectile-hit-detection state))
-                  (+ (nr-dead-zombies (Z-hit-detection state)) (GameState-Score state)))) 
+                  (+ (nr-dead-zombies (Z-hit-detection state)) (GameState-Score state))
+                  (GameState-Menue state))]
+  [else state]))
 
 
 (provide (all-defined-out))

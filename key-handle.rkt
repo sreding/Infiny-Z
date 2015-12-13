@@ -11,7 +11,7 @@
 ; Gamestate + key input -> Gamestate
 
 
-(define (keyhandler state key)
+(define (keyhandler-game state key)
   (local [(define x (posn-x (Player-position (GameState-player state))))
           (define y (posn-y (Player-position (GameState-player state))))]
   
@@ -27,7 +27,8 @@
                                        )
                          (GameState-Zombies state)
                          (GameState-Projectiles state)
-                         (GameState-Score state))]
+                         (GameState-Score state)
+                         (GameState-Menue state))]
          
         [(string=? key "a")
          (make-GameState (make-Player (Player-img (GameState-player state))
@@ -40,7 +41,8 @@
                                        )
                          (GameState-Zombies state)
                          (GameState-Projectiles state)
-                         (GameState-Score state))]
+                         (GameState-Score state)
+                         (GameState-Menue state))]
          
         
 
@@ -55,7 +57,8 @@
                                         (Player-Weapon (GameState-player state)))
                          (GameState-Zombies state)
                          (GameState-Projectiles state)
-                         (GameState-Score state))]
+                         (GameState-Score state)
+                         (GameState-Menue state))]
         
         
         [(string=? key "s")
@@ -68,9 +71,15 @@
                                       (Player-Weapon (GameState-player state)))
                          (GameState-Zombies state)
                          (GameState-Projectiles state)
-                         (GameState-Score state))]
+                         (GameState-Score state)
+                         (GameState-Menue state))]
          
         
         [else state])))
+(define (keyhandler state key)
+  (cond [(= (GameState-Menue state) 5)
+         (keyhandler-game state key)]
+        [else state]))
+         
 
 (provide (all-defined-out))

@@ -5,7 +5,11 @@
 (require 2htdp/image)
 (require "DataDefinitions.rkt")
 
-;(define BACKGROUND (empty-scene WIDTH HEIGHT))
+;Menue
+(define Menue (bitmap/file "Menu.png"))
+(define HowTo (bitmap/file "HowTo.png"))
+(define HowToTwo (bitmap/file "HowToTwo.png"))
+(define GameOver (bitmap/file "HowToTwo.png"))
 
 
 (define GUN (rotate 90 (bitmap/file "Gun.png")))
@@ -15,19 +19,7 @@
 
 (define PLAYER1 (circle 0 "solid" "white"))
 
-;Example colapsed for visibility
-(define Example (make-GameState (make-Player 1
-                                             100
-                                             ;(make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
-                                             (make-posn 100 100)
-                                             (make-posn 0 0)
-                                             (make-Weapon 1
-                                                          0
-                                                          0
-                                                          500))
-                                (list)
-                                '()
-                                0))
+
 
 
 ; Zombies, img -> image
@@ -107,14 +99,20 @@
 ;to-draw
 ; GameStat -> Image
 (define (render state)
-  (draw-gun (GameState-player state)
-(draw-projectiles
- (GameState-Projectiles state)
- (draw-zombies
-  (GameState-Zombies state) (GameState-player state)
-  (draw-player
-   (GameState-player state)
-   BACKGROUND)))))
+  (cond [(= (GameState-Menue state) 5)
+         (draw-gun (GameState-player state)
+                   (draw-projectiles
+                    (GameState-Projectiles state)
+                    (draw-zombies
+                     (GameState-Zombies state) (GameState-player state)
+                     (draw-player
+                      (GameState-player state)
+                      BACKGROUND))))]
+        [(= (GameState-Menue state) 1) Menue]
+        [(= (GameState-Menue state) 5) HowTo]
+        [(= (GameState-Menue state) 5) HowToTwo]
+        [(= (GameState-Menue state) 5) GameOver]))
+        
 
 
 

@@ -22,6 +22,7 @@
 
 
 (define (mouse-handle state x y event)
+  (cond [(= (GameState-Menue state) 5)
   (make-GameState (make-Player
                    (Player-img (GameState-player state))
                    (Player-health (GameState-player state)) 
@@ -33,6 +34,9 @@
                                 (Weapon-projectilespeed (Player-Weapon (GameState-player state)))))
                   (GameState-Zombies state)
                   (if (string=? "button-down" event) (add-projectile (GameState-Projectiles state) (GameState-player state) x y) (GameState-Projectiles state))
-                  (GameState-Score state)))
+                  (GameState-Score state)
+                  (GameState-Menue state))]
+        [(and (= (GameState-Menue state) 1) (string=? "button-down" event)) Level1]
+        [else state]))
 
 (provide (all-defined-out))

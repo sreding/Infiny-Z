@@ -33,7 +33,12 @@
 ; Zombies - List<Zombie>
 ; Projectiles - List<Projectile>
 ; Score - Integer
-(define-struct GameState [player Zombies Projectiles Score] #:prefab)
+; 1 -> Menu
+; 2 -> HowTo
+; 3 -> HowTo2
+; 4 -> Game Over
+; 5 -> Level1 
+(define-struct GameState [player Zombies Projectiles Score Menue] #:prefab)
 
 
 
@@ -54,6 +59,36 @@
 (define WIDTH (image-width BACKGROUND))
 (define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
 (define ZOMBIE2 (rotate 90 (bitmap/file "Super-Zombie.png")))
+
+;Initial State
+(define Example (make-GameState (make-Player 1
+                                             100
+                                             ;(make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
+                                             (make-posn 100 100)
+                                             (make-posn 0 0)
+                                             (make-Weapon 1
+                                                          0
+                                                          0
+                                                          500))
+                                (list)
+                                '()
+                                0
+                                1))
+
+;Initial State
+(define Level1 (make-GameState (make-Player 1
+                                             100
+                                             ;(make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
+                                             (make-posn 100 100)
+                                             (make-posn 0 0)
+                                             (make-Weapon 1
+                                                          0
+                                                          0
+                                                          500))
+                                (list)
+                                '()
+                                0
+                                5))
 
 ; global functions
 ; Zombie/Player Number -> Boolean
