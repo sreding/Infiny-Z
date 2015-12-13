@@ -37,8 +37,13 @@
                   (GameState-PowerUps state)
                   (GameState-Score state)
                   (GameState-Menue state))]
-        [(and (= (GameState-Menue state) 1) (string=? "button-down" event)) Level1]
-        [(and (= (GameState-Menue state) 4) (string=? "button-down" event)) InitState]
+        [(and (= (GameState-Menue state) 1) (and (< 455 x 830) (< 350 y 495)) (string=? "button-down" event)) Level1]
+        [(and (= (GameState-Menue state) 1) (and (< 510 x 770) (< 545 y 650)) (string=? "button-down" event)) HowTo-state]
+        [(and (= (GameState-Menue state) 2) (and (< 60 x 285) (< 85 y 170)) (string=? "button-down" event)) InitState]
+        [(and (= (GameState-Menue state) 2) (not (and (< 60 x 285) (< 85 y 170))) (string=? "button-down" event)) HowTo2-state]
+        [(and (= (GameState-Menue state) 3) (and (< 60 x 285) (< 85 y 170)) (string=? "button-down" event)) InitState]
+        [(and (= (GameState-Menue state) 4) (and (< 460 x 815) (< 450 y 560)) (string=? "button-down" event)) Level1]
+        [(and (= (GameState-Menue state) 4) (and (< 500 x 775) (< 680 y 770)) (string=? "button-down" event)) InitState]
         [(= (GameState-Menue state) 10) state]
         [else state]))
 
