@@ -66,6 +66,7 @@
 (define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
 (define ZOMBIE2 (rotate 90 (bitmap/file "Super-Zombie.png")))
 (define HEALTH (bitmap/file "MedPU.png"))
+(define NUKE (bitmap/file "NukePU.png"))
 
 ;Initial State Menue
 (define InitState (make-GameState (make-Player 1
@@ -82,6 +83,36 @@
                                 '()
                                 0
                                 1))
+;HowTo 1
+(define HowTo-state (make-GameState (make-Player 1
+                                             100
+                                             ;(make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
+                                             (make-posn 100 100)
+                                             (make-posn 0 0)
+                                             (make-Weapon 1
+                                                          0
+                                                          0
+                                                          500))
+                                (list)
+                                '()
+                                '()
+                                0
+                                2))
+;HowTo 2
+(define HowTo2-state (make-GameState (make-Player 1
+                                             100
+                                             ;(make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
+                                             (make-posn 100 100)
+                                             (make-posn 0 0)
+                                             (make-Weapon 1
+                                                          0
+                                                          0
+                                                          500))
+                                (list)
+                                '()
+                                '()
+                                0
+                                3))
 
 ;Initial State
 (define Level1 (make-GameState (make-Player 1

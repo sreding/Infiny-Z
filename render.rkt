@@ -111,7 +111,7 @@
 ; PowerUps Image -> Image
 (define (draw-power-ups PowerUps img)
   (cond [(empty? PowerUps) img]
-        [else (place-image (if (= (PowerUp-nr (first PowerUps)) 0) HEALTH HEALTH)
+        [else (place-image (if (= (PowerUp-nr (first PowerUps)) 0) HEALTH NUKE)
                            (posn-x (PowerUp-position (first PowerUps)))
                            (posn-y (PowerUp-position (first PowerUps)))
                            (draw-power-ups (rest PowerUps) img))]))
