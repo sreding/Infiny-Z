@@ -16,13 +16,12 @@
 
 
 (define (main _)
-  (big-bang Example
+  (big-bang InitState
             [to-draw render]
             [on-key keyhandler]
             [on-tick update]
             [on-release release]
             [on-mouse mouse-handle]
-           ; [stop-when sop]
             ))
 
 

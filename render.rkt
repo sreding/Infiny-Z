@@ -9,7 +9,7 @@
 (define Menue (bitmap/file "Menu.png"))
 (define HowTo (bitmap/file "HowTo.png"))
 (define HowToTwo (bitmap/file "HowToTwo.png"))
-(define GameOver (bitmap/file "HowToTwo.png"))
+(define GameOver (bitmap/file "GameOver.png"))
 
 
 (define GUN (rotate 90 (bitmap/file "Gun.png")))
@@ -33,7 +33,7 @@
 ; Projectiles --> image
 (define (draw-projectiles Projectiles Image)
   (cond [(empty? Projectiles) Image]
-        [else (place-image (cond [(= 1 (Projectile-img (first Projectiles))) (circle 5 "solid" "red")]) 
+        [else (place-image (cond [(= 1 (Projectile-img (first Projectiles))) (circle 3 "solid" "red")]) 
                             (posn-x (Projectile-position (first Projectiles)))
                             (posn-y (Projectile-position (first Projectiles)))
                             (draw-projectiles (rest Projectiles) Image))]))
@@ -99,7 +99,7 @@
 (define (draw-score score img)
   (place-image
    (text (string-append "Score: " (number->string score)) 24 "red")
-   (- WIDTH 50) 20
+   (- WIDTH 90) 20
   img))
 
 

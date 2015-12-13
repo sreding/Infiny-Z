@@ -169,10 +169,15 @@
 (define (update-player Player Zombies)
   (update-player-position (damage-calculation Player Zombies)))
 
+; GameState -> Boolean
+; Returns #true if Player-health < 0
+(define (game-over? state)
+  (< (Player-health (GameState-player state)) 0))
 
 ; GameState -> GameState
 (define (update state)
-  (cond [(= (GameState-Menue state) 5)
+  (cond [(game-over? state) Game-Over]
+    [(= (GameState-Menue state) 5)
   (make-GameState (update-player (GameState-player state) (GameState-Zombies state))
                   (add-random-zombies (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state))))
                   (update-projectiles (Projectile-hit-detection state))

@@ -60,8 +60,8 @@
 (define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
 (define ZOMBIE2 (rotate 90 (bitmap/file "Super-Zombie.png")))
 
-;Initial State
-(define Example (make-GameState (make-Player 1
+;Initial State Menue
+(define InitState (make-GameState (make-Player 1
                                              100
                                              ;(make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
                                              (make-posn 100 100)
@@ -90,6 +90,22 @@
                                 0
                                 5))
 
+;Initial State GameOver
+(define Game-Over (make-GameState (make-Player 1
+                                             100
+                                             ;(make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
+                                             (make-posn 100 100)
+                                             (make-posn 0 0)
+                                             (make-Weapon 1
+                                                          0
+                                                          0
+                                                          500))
+                                (list)
+                                '()
+                                0
+                                4))
+
+
 ; global functions
 ; Zombie/Player Number -> Boolean
 ;
@@ -114,7 +130,8 @@
                       (< x 30)
                       (< (- WIDTH 30) x)
                       (< y 30)
-                      (< (- HEIGHT 30) y))]))
+                      (< (- HEIGHT 40) y))]))
+
 ; Number Number Number -> Boolean
 ; same as obsatcle-hit but changed hitboxes for projectiles
 (define (obstacle-hit-proj x y level)
