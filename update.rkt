@@ -60,8 +60,8 @@
                           (make-Zombie
                            (Zombie-img Zombie)
                            (Zombie-health Zombie)
-                           (make-posn (if (obstacle-hit x-plus-dx y 1) x x-plus-dx)
-                                      (if (obstacle-hit x y-plus-dy 1) y y-plus-dy))
+                           (make-posn (if (obstacle-hit-z x-plus-dx y 1) x x-plus-dx)
+                                      (if (obstacle-hit-z x y-plus-dy 1) y y-plus-dy))
                            (Zombie-damage Zombie))))
        Zombies))
 
@@ -102,8 +102,9 @@
 ; Zombies -> Zombies
 ; add random zombies
 (define (add-random-zombies Zombies)
-  (local [(define rand-nr (random 50))
-          (define rand-zombie (random 10))]
+  (local [(define rand-nr (random 150))
+          (define rand-zombie (random 10))
+          (define rand-nr2 (random 4))]
     (cond [(= 0 rand-nr) (cons (make-Zombie (if (= rand-zombie 0) ZOMBIE2 ZOMBIE1)
                                       (if (= rand-zombie 0) 160 40)
                                       (make-posn 1210 590)
@@ -111,6 +112,13 @@
           [(= 1 rand-nr) (cons (make-Zombie (if (= rand-zombie 0) ZOMBIE2 ZOMBIE1)
                                       (if (= rand-zombie 0) 160 40)
                                       (make-posn 440 320)
+                                      1) Zombies)]
+          [(= 2 rand-nr) (cons (make-Zombie (if (= rand-zombie 0) ZOMBIE2 ZOMBIE1)
+                                      (if (= rand-zombie 0) 160 40)
+                                      (cond [(= rand-nr2 0) (make-posn (random WIDTH) -30)]
+                                            [(= rand-nr2 1) (make-posn (random WIDTH) (+ 30 HEIGHT))]
+                                            [(= rand-nr2 2) (make-posn -30 (random HEIGHT))]
+                                            [else (make-posn (+ 30 WIDTH) (random HEIGHT))])
                                       1) Zombies)]
           [else Zombies])))
 

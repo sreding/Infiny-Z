@@ -106,8 +106,9 @@
                                 4))
 
 
+
 ; global functions
-; Zombie/Player Number -> Boolean
+; Player Number -> Boolean
 ;
 (define (obstacle-hit x y level)
   (cond [(= level 1) (or
@@ -131,6 +132,29 @@
                       (< (- WIDTH 30) x)
                       (< y 30)
                       (< (- HEIGHT 40) y))]))
+
+; global functions
+; Zombie Number Number -> Boolean
+;
+(define (obstacle-hit-z x y level)
+  (cond [(= level 1) (or
+                      (and (< 535 x 845)
+                           (< 395 y 675))
+                     (and (< 40 x 330)
+                           (< 400 y 676))
+                     (and (< 375 x 773)
+                           (< 0 y 261))
+                     (and (< 1173 x 1285)
+                           (< 30 y 300))
+                     (and (< 263 x 400) ;Blue Car
+                           (< 672 y 737))
+                     (and (< 420 x 632) ;Truck
+                           (< 760 y 850))
+                     (and (< 860 x 946) ;Red Car
+                           (< 0 y 109))
+                     (and (< 1070 x 1175) ;5-O
+                           (< 385 y 560))
+                     )]))
 
 ; Number Number Number -> Boolean
 ; same as obsatcle-hit but changed hitboxes for projectiles
