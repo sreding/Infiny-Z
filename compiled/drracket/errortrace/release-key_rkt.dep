@@ -1,1 +1,0 @@
-("6.2.1" ("1ea7d824ce70efc4983b9d2a6252456828811a2f" . "44ed8a32de21fa2827f8c753ef4b6381ac63e9cc") (collects #"errortrace" #"errortrace-key.rkt") #"/Users/simonreding/GitHub/FinalProjectZombies/datadefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
