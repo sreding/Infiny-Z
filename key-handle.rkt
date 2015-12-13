@@ -73,11 +73,16 @@
                          (GameState-Projectiles state)
                          (GameState-Score state)
                          (GameState-Menue state))]
-         
-        
+        [(string=? key "p")
+         (make-GameState (GameState-player state)
+                         (GameState-Zombies state)
+                         (GameState-Projectiles state)
+                         (GameState-Score state)
+                         (if (= (GameState-Menue state) 10) 5 10))]
         [else state])))
+
 (define (keyhandler state key)
-  (cond [(= (GameState-Menue state) 5)
+  (cond [(or  (= (GameState-Menue state) 10)(= (GameState-Menue state) 5))
          (keyhandler-game state key)]
         [else state]))
          
