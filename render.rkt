@@ -95,11 +95,19 @@
                (+ (posn-y (Player-position Player)) 0)
                img))
 
+; Score, Image -> Image
+(define (draw-score score img)
+  (place-image
+   (text (string-append "Score: " (number->string score)) 24 "red")
+   (- WIDTH 50) 20
+  img))
+
 
 ;to-draw
 ; GameStat -> Image
 (define (render state)
   (cond [(= (GameState-Menue state) 5)
+         (draw-score (GameState-Score state)
          (draw-gun (GameState-player state)
                    (draw-projectiles
                     (GameState-Projectiles state)
@@ -107,11 +115,11 @@
                      (GameState-Zombies state) (GameState-player state)
                      (draw-player
                       (GameState-player state)
-                      BACKGROUND))))]
+                      BACKGROUND)))))]
         [(= (GameState-Menue state) 1) Menue]
-        [(= (GameState-Menue state) 5) HowTo]
-        [(= (GameState-Menue state) 5) HowToTwo]
-        [(= (GameState-Menue state) 5) GameOver]))
+        [(= (GameState-Menue state) 2) HowTo]
+        [(= (GameState-Menue state) 3) HowToTwo]
+        [(= (GameState-Menue state) 4) GameOver]))
         
 
 
