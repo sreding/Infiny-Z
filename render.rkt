@@ -101,21 +101,38 @@
    (text (string-append "Score: " (number->string score)) 24 "red")
    (- WIDTH 90) 20
   img))
-
+; Player, Image -> Image
+(define (draw-health Player img)
+  (place-image (text (string-append "Health: " (number->string (if (< (Player-health Player) 0) 0 (Player-health Player)))) 24 "red")
+               90 20
+               img))
 
 ;to-draw
 ; GameStat -> Image
 (define (render state)
   (cond [(or (= (GameState-Menue state) 5)  (= (GameState-Menue state) 10))
-         (draw-score (GameState-Score state)
-         (draw-gun (GameState-player state)
-                   (draw-projectiles
-                    (GameState-Projectiles state)
-                    (draw-zombies
-                     (GameState-Zombies state) (GameState-player state)
-                     (draw-player
-                      (GameState-player state)
-                      BACKGROUND)))))]
+         (if (= (GameState-Menue state) 10) (overlay (text "PAUSE" 40 "red")
+                                                     (draw-health (GameState-player state)
+                                                     (draw-score (GameState-Score state)
+                                                                 (draw-gun (GameState-player state)
+                                                                           (draw-projectiles
+                                                                            (GameState-Projectiles state)
+                                                                            (draw-zombies
+                                                                             (GameState-Zombies state) (GameState-player state)
+                                                                             (draw-player
+                                                                              (GameState-player state)
+                                                                              BACKGROUND)))))))
+             (draw-health (GameState-player state)
+             (draw-score (GameState-Score state)
+                         (draw-gun (GameState-player state)
+                                   (draw-projectiles
+                                    (GameState-Projectiles state)
+                                    (draw-zombies
+                                     (GameState-Zombies state) (GameState-player state)
+                                     (draw-player
+                                      (GameState-player state)
+                                      BACKGROUND)))))))
+         ]
         [(= (GameState-Menue state) 1) Menue]
         [(= (GameState-Menue state) 2) HowTo]
         [(= (GameState-Menue state) 3) HowToTwo]
