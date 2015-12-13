@@ -37,7 +37,8 @@
 ; 2 -> HowTo
 ; 3 -> HowTo2
 ; 4 -> Game Over
-; 5 -> Level1 
+; 5 -> Level1
+; 10 -> pause the game
 (define-struct GameState [player Zombies Projectiles Score Menue] #:prefab)
 
 
@@ -112,21 +113,21 @@
 ;
 (define (obstacle-hit x y level)
   (cond [(= level 1) (or
-                      (and (< 535 x 845)
-                           (< 395 y 675))
-                     (and (< 40 x 330)
-                           (< 400 y 676))
-                     (and (< 375 x 773)
-                           (< 0 y 261))
-                     (and (< 1173 x 1285)
+                      (and (< 535 x 840) ; House, Center
+                           (< 395 y 670))
+                     (and (< 37 x 330) ; House, bottom left
+                           (< 405 y 663))
+                     (and (< 383 x 768) ; House, Top center
+                           (< -30 y 261))
+                     (and (< 1173 x 1309) ; House, Top right
                            (< 30 y 300))
                      (and (< 263 x 400) ;Blue Car
                            (< 672 y 737))
-                     (and (< 420 x 632) ;Truck
-                           (< 760 y 850))
+                     (and (< 415 x 636) ;Truck
+                           (< 750 y 890))
                      (and (< 860 x 946) ;Red Car
                            (< 0 y 109))
-                     (and (< 1070 x 1175) ;5-O
+                     (and (< 1060 x 1165) ;Police car
                            (< 385 y 560))
                       (< x 30)
                       (< (- WIDTH 30) x)
@@ -138,21 +139,21 @@
 ;
 (define (obstacle-hit-z x y level)
   (cond [(= level 1) (or
-                      (and (< 535 x 845)
-                           (< 395 y 675))
-                     (and (< 40 x 330)
-                           (< 400 y 676))
-                     (and (< 375 x 773)
-                           (< 0 y 261))
-                     (and (< 1173 x 1285)
+                      (and (< 535 x 840) ; House, Center
+                           (< 395 y 670))
+                     (and (< 37 x 330) ; House, bottom left
+                           (< 405 y 663))
+                     (and (< 383 x 768) ; House, Top center
+                           (< -30 y 261))
+                     (and (< 1173 x 1309) ; House, Top right
                            (< 30 y 300))
                      (and (< 263 x 400) ;Blue Car
                            (< 672 y 737))
-                     (and (< 420 x 632) ;Truck
-                           (< 760 y 850))
+                     (and (< 415 x 636) ;Truck
+                           (< 750 y 890))
                      (and (< 860 x 946) ;Red Car
                            (< 0 y 109))
-                     (and (< 1070 x 1175) ;5-O
+                     (and (< 1060 x 1165) ;Police car
                            (< 385 y 560))
                      )]))
 
