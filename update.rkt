@@ -220,6 +220,32 @@
   (filter (lambda (x) (not (and (< (- (posn-x (PowerUp-position x)) 30) (posn-x (Player-position Player)) (+ (posn-x (PowerUp-position x)) 30))
                                 (< (- (posn-y (PowerUp-position x)) 30) (posn-y (Player-position Player)) (+ (posn-y (PowerUp-position x)) 30)))))
             PowerUps))
+
+; Player PowerUp -> boolean
+; returns #true if player hits a powerup
+(define (player-overlaps-power-up Player PowerUp)
+  (and (and (< (- (posn-x (PowerUp-position PowerUp)) 30) (posn-x (Player-position Player)) (+ (posn-x (PowerUp-position PowerUp)) 30))
+                                (< (- (posn-y (PowerUp-position PowerUp)) 30) (posn-y (Player-position Player)) (+ (posn-y (PowerUp-position PowerUp)) 30)))
+        (= 1 (PowerUp-nr PowerUp))))
+
+; Player PowerUps -> Player
+; Sets Player health to 100 if the player picks up a health pack
+(define (nuke? Player PowerUps)
+  (cond [(empty? PowerUps) #false]
+        [else (or (player-overlaps-power-up Player (first PowerUps))
+                  (nuke? Player (rest PowerUps)))]))
+; Player PowerUps -> Player
+(define (nuke Zombies Player PowerUps)
+  (if (nuke? Player PowerUps)
+      (map (lambda (x) (make-Zombie (Zombie-img x)
+                                    0
+                                    (Zombie-position x)
+                                    (Zombie-damage x)))
+           Zombies)
+      Zombies))
+
+               
+
                                              
 
 ; GameState -> GameState
@@ -228,10 +254,10 @@
         [(= (GameState-Menue state) 10) state]
     [(= (GameState-Menue state) 5)
   (make-GameState (update-player (GameState-player state) (GameState-Zombies state) (GameState-PowerUps state))
-                  (add-random-zombies (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state))))
+                  (add-random-zombies (zombie-dead (update-zombies (nuke (Z-hit-detection state) (GameState-player state) (GameState-PowerUps state)) (GameState-player state)) ))
                   (update-projectiles (Projectile-hit-detection state))
                   (delete-powerups (spawn-random-power-up (GameState-PowerUps state) ) (GameState-player state))
-                  (+ (nr-dead-zombies (Z-hit-detection state)) (GameState-Score state))
+                  (+ (nr-dead-zombies (nuke (Z-hit-detection state) (GameState-player state) (GameState-PowerUps state))) (GameState-Score state))
                   (GameState-Menue state))]
   [else state]))
 

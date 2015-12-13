@@ -66,6 +66,7 @@
 (define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
 (define ZOMBIE2 (rotate 90 (bitmap/file "Super-Zombie.png")))
 (define HEALTH (bitmap/file "MedPU.png"))
+(define NUKE (bitmap/file "NukePU.png"))
 
 ;Initial State Menue
 (define InitState (make-GameState (make-Player 1
