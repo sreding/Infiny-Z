@@ -130,21 +130,7 @@
                                 0
                                 5))
 
-;Initial State GameOver
-(define Game-Over (make-GameState (make-Player 1
-                                             100
-                                             ;(make-posn (/ WIDTH 2) (/ (- HEIGHT 30)2))
-                                             (make-posn 100 100)
-                                             (make-posn 0 0)
-                                             (make-Weapon 1
-                                                          0
-                                                          0
-                                                          500))
-                                (list)
-                                '()
-                                '()
-                                0
-                                4))
+
 
 
 

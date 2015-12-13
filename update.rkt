@@ -243,7 +243,10 @@
 
 ; GameState -> GameState
 (define (update state)
-  (cond [(game-over? state) Game-Over]
+  (cond [(game-over? state) (make-GameState (GameState-player state)
+                                            '() '() '()
+                                            (GameState-Score state)
+                                            4)]
         [(= (GameState-Menue state) 10) state]
         [(= (GameState-Menue state) 5)
          (make-GameState (update-player (GameState-player state) (GameState-Zombies state) (GameState-PowerUps state))

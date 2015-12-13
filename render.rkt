@@ -148,7 +148,7 @@
         [(= (GameState-Menue state) 1) Menue]
         [(= (GameState-Menue state) 2) HowTo]
         [(= (GameState-Menue state) 3) HowToTwo]
-        [(= (GameState-Menue state) 4) GameOver]))
+        [(= (GameState-Menue state) 4) (place-image (text (string-append "Score: " (number->string (GameState-Score state))) 40 "white") 640 350 GameOver)]))
         
 
 

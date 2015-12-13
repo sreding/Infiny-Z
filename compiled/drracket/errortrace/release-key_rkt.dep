@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-("6.2.1" ("bd618ad7a9688be4e705819f973c0ac926d6bdc2" . "4b0435f06f14edce5237e47b5e6c6848a333dbff") #"/Users/simonreding/GitHub/FinalProjectZombies/datadefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
-=======
-("6.2.1" ("bd618ad7a9688be4e705819f973c0ac926d6bdc2" . "3ac6d32412adca7660f19dd275c494f729576ebb") #"/Users/alexandercamenzind/Desktop/PF1Project/datadefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
->>>>>>> origin/master
+("6.2.1" ("bd618ad7a9688be4e705819f973c0ac926d6bdc2" . "ec056507ac81d623bd096ab0c7c226fe4066672a") #"/Users/alexandercamenzind/Desktop/PF1Project/datadefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
