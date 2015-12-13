@@ -33,12 +33,13 @@
         
                                           
 (define (release state key)
-  (cond [(= (GameState-Menue state) 5)
+  (cond [(or (= (GameState-Menue state) 5)  (= (GameState-Menue state) 10))
   (make-GameState (release-update-player (GameState-player state) key)
                   (GameState-Zombies state)
                   (GameState-Projectiles state)
                   (GameState-Score state)
                   (GameState-Menue state))]
+        [(= (GameState-Menue state)10) state]
   [else state]))
 
 

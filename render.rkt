@@ -106,7 +106,7 @@
 ;to-draw
 ; GameStat -> Image
 (define (render state)
-  (cond [(= (GameState-Menue state) 5)
+  (cond [(or (= (GameState-Menue state) 5)  (= (GameState-Menue state) 10))
          (draw-score (GameState-Score state)
          (draw-gun (GameState-player state)
                    (draw-projectiles

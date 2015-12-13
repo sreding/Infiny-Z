@@ -38,6 +38,7 @@
                   (GameState-Menue state))]
         [(and (= (GameState-Menue state) 1) (string=? "button-down" event)) Level1]
         [(and (= (GameState-Menue state) 4) (string=? "button-down" event)) InitState]
+        [(= (GameState-Menue state) 10) state]
         [else state]))
 
 (provide (all-defined-out))

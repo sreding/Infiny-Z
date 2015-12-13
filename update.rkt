@@ -185,6 +185,7 @@
 ; GameState -> GameState
 (define (update state)
   (cond [(game-over? state) Game-Over]
+        [(= (GameState-Menue state) 10) state]
     [(= (GameState-Menue state) 5)
   (make-GameState (update-player (GameState-player state) (GameState-Zombies state))
                   (add-random-zombies (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state))))
