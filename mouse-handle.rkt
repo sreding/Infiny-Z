@@ -34,6 +34,7 @@
                                 (Weapon-projectilespeed (Player-Weapon (GameState-player state)))))
                   (GameState-Zombies state)
                   (if (string=? "button-down" event) (add-projectile (GameState-Projectiles state) (GameState-player state) x y) (GameState-Projectiles state))
+                  (GameState-PowerUps state)
                   (GameState-Score state)
                   (GameState-Menue state))]
         [(and (= (GameState-Menue state) 1) (string=? "button-down" event)) Level1]

@@ -28,10 +28,15 @@
 ; Zombie
 (define-struct Zombie [img health position damage]  #:prefab)
 
+; Powerup
+(define-struct PowerUp [position nr] #:prefab)
+
+
 ; Game State
 ; Player- player
 ; Zombies - List<Zombie>
 ; Projectiles - List<Projectile>
+; PowerUps - List<PowerUp>
 ; Score - Integer
 ; 1 -> Menu
 ; 2 -> HowTo
@@ -39,7 +44,7 @@
 ; 4 -> Game Over
 ; 5 -> Level1
 ; 10 -> pause the game
-(define-struct GameState [player Zombies Projectiles Score Menue] #:prefab)
+(define-struct GameState [player Zombies Projectiles PowerUps Score Menue] #:prefab)
 
 
 
@@ -60,6 +65,7 @@
 (define WIDTH (image-width BACKGROUND))
 (define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
 (define ZOMBIE2 (rotate 90 (bitmap/file "Super-Zombie.png")))
+(define HEALTH (square 30 "solid" "red"))
 
 ;Initial State Menue
 (define InitState (make-GameState (make-Player 1
@@ -72,6 +78,7 @@
                                                           0
                                                           500))
                                 (list)
+                                '()
                                 '()
                                 0
                                 1))
@@ -88,6 +95,7 @@
                                                           500))
                                 (list)
                                 '()
+                                '()
                                 0
                                 5))
 
@@ -102,6 +110,7 @@
                                                           0
                                                           500))
                                 (list)
+                                '()
                                 '()
                                 0
                                 4))

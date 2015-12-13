@@ -101,11 +101,21 @@
    (text (string-append "Score: " (number->string score)) 24 "red")
    (- WIDTH 90) 20
   img))
+
 ; Player, Image -> Image
 (define (draw-health Player img)
   (place-image (text (string-append "Health: " (number->string (if (< (Player-health Player) 0) 0 (Player-health Player)))) 24 "red")
                90 20
                img))
+
+; PowerUps Image -> Image
+(define (draw-power-ups PowerUps img)
+  (cond [(empty? PowerUps) img]
+        [else (place-image (if (= (PowerUp-nr (first PowerUps)) 0) HEALTH HEALTH)
+                           (posn-x (PowerUp-position (first PowerUps)))
+                           (posn-y (PowerUp-position (first PowerUps)))
+                           (draw-power-ups (rest PowerUps) img))]))
+                               
 
 ;to-draw
 ; GameStat -> Image
@@ -114,6 +124,7 @@
          (if (= (GameState-Menue state) 10) (overlay (text "PAUSE" 40 "red")
                                                      (draw-health (GameState-player state)
                                                      (draw-score (GameState-Score state)
+                                                                 (draw-power-ups (GameState-PowerUps state)
                                                                  (draw-gun (GameState-player state)
                                                                            (draw-projectiles
                                                                             (GameState-Projectiles state)
@@ -121,9 +132,10 @@
                                                                              (GameState-Zombies state) (GameState-player state)
                                                                              (draw-player
                                                                               (GameState-player state)
-                                                                              BACKGROUND)))))))
+                                                                              BACKGROUND))))))))
              (draw-health (GameState-player state)
              (draw-score (GameState-Score state)
+                         (draw-power-ups (GameState-PowerUps state)
                          (draw-gun (GameState-player state)
                                    (draw-projectiles
                                     (GameState-Projectiles state)
@@ -131,7 +143,7 @@
                                      (GameState-Zombies state) (GameState-player state)
                                      (draw-player
                                       (GameState-player state)
-                                      BACKGROUND)))))))
+                                      BACKGROUND))))))))
          ]
         [(= (GameState-Menue state) 1) Menue]
         [(= (GameState-Menue state) 2) HowTo]

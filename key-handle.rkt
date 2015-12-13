@@ -27,6 +27,7 @@
                                        )
                          (GameState-Zombies state)
                          (GameState-Projectiles state)
+                         (GameState-PowerUps state)
                          (GameState-Score state)
                          (GameState-Menue state))]
          
@@ -41,6 +42,7 @@
                                        )
                          (GameState-Zombies state)
                          (GameState-Projectiles state)
+                         (GameState-PowerUps state)
                          (GameState-Score state)
                          (GameState-Menue state))]
          
@@ -57,6 +59,7 @@
                                         (Player-Weapon (GameState-player state)))
                          (GameState-Zombies state)
                          (GameState-Projectiles state)
+                         (GameState-PowerUps state)
                          (GameState-Score state)
                          (GameState-Menue state))]
         
@@ -71,12 +74,14 @@
                                       (Player-Weapon (GameState-player state)))
                          (GameState-Zombies state)
                          (GameState-Projectiles state)
+                         (GameState-PowerUps state)
                          (GameState-Score state)
                          (GameState-Menue state))]
         [(string=? key "p")
          (make-GameState (GameState-player state)
                          (GameState-Zombies state)
                          (GameState-Projectiles state)
+                         (GameState-PowerUps state)
                          (GameState-Score state)
                          (if (= (GameState-Menue state) 10) 5 10))]
         [else state])))

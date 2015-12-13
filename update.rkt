@@ -182,6 +182,22 @@
 (define (game-over? state)
   (< (Player-health (GameState-player state)) 0))
 
+; PowerUps -> PowerUps
+(define (spawn-random-power-up PowerUps)
+  (local [(define rand-nr (random 200))
+          (define rand-nr2 (random 2))]
+    (cond [(= rand-nr 0) (cons (make-PowerUp (make-posn (random WIDTH)
+                                                        (random HEIGHT))
+                                             rand-nr2) PowerUps)]
+          [else PowerUps])))
+
+; PowerUps Player -> PowerUps
+(define (delete-powerups PowerUps Player)
+  (filter (lambda (x) (not (and (< (- (posn-x (Player-position Player)) 15) (posn-x (PowerUp-position x)) (+ (posn-x (Player-position Player)) 15))
+                           (< (- (posn-y (Player-position Player)) 15) (posn-y (PowerUp-position x)) (+ (posn-y (Player-position Player)) 15)))))
+            PowerUps))
+                                             
+
 ; GameState -> GameState
 (define (update state)
   (cond [(game-over? state) Game-Over]
@@ -190,6 +206,7 @@
   (make-GameState (update-player (GameState-player state) (GameState-Zombies state))
                   (add-random-zombies (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state))))
                   (update-projectiles (Projectile-hit-detection state))
+                  (delete-powerups (spawn-random-power-up (GameState-PowerUps state) ) (GameState-player state))
                   (+ (nr-dead-zombies (Z-hit-detection state)) (GameState-Score state))
                   (GameState-Menue state))]
   [else state]))

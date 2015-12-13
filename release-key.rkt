@@ -37,6 +37,7 @@
   (make-GameState (release-update-player (GameState-player state) key)
                   (GameState-Zombies state)
                   (GameState-Projectiles state)
+                  (GameState-PowerUps state)
                   (GameState-Score state)
                   (GameState-Menue state))]
         [(= (GameState-Menue state)10) state]
