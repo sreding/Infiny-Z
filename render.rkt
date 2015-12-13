@@ -13,7 +13,7 @@
 ;(define GUN (scale (/ 1 15)(bitmap/file "Gun.png")))
 
 
-(define PLAYER1 (bitmap/file "Player.png"))
+(define PLAYER1 (circle 0 "solid" "white"))
 
 ;Example colapsed for visibility
 (define Example (make-GameState (make-Player 1
@@ -24,40 +24,8 @@
                                              (make-Weapon 1
                                                           0
                                                           0
-                                                          9000))
-                                (list
-                                 (make-Zombie ZOMBIE2
-                                              100
-                                              (make-posn (random WIDTH) (- HEIGHT 30))
-                                              9000)
-                                 (make-Zombie ZOMBIE2
-                                              100
-                                              (make-posn (random WIDTH) (- HEIGHT 30))
-                                              9000)
-                                 (make-Zombie ZOMBIE2
-                                              100
-                                              (make-posn (random WIDTH) (- HEIGHT 30))
-                                              9000)
-                                 (make-Zombie ZOMBIE2
-                                              100
-                                              (make-posn (random WIDTH) (- HEIGHT 30))
-                                              9000)
-                                 (make-Zombie ZOMBIE2
-                                              100
-                                              (make-posn (random WIDTH) (- HEIGHT 30))
-                                              9000)
-                                 (make-Zombie ZOMBIE2
-                                              100
-                                              (make-posn (random WIDTH) (- HEIGHT 30))
-                                              9000)
-                                 (make-Zombie ZOMBIE2
-                                              100
-                                              (make-posn (random WIDTH) (- HEIGHT 30))
-                                              9000)
-                                 (make-Zombie ZOMBIE2
-                                              100
-                                              (make-posn (random WIDTH) (- HEIGHT 30))
-                                              9000))
+                                                          500))
+                                (list)
                                 '()
                                 0))
 

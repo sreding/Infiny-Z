@@ -49,7 +49,7 @@
 
 ; global constants
 (define BACKGROUND (bitmap/file "Map.png"))
-(define SPEED 5)
+(define SPEED 10)
 (define HEIGHT (image-height BACKGROUND))
 (define WIDTH (image-width BACKGROUND))
 (define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
@@ -80,6 +80,23 @@
                       (< (- WIDTH 30) x)
                       (< y 30)
                       (< (- HEIGHT 30) y))]))
+; Number Number Number -> Boolean
+; same as obsatcle-hit but changed hitboxes for projectiles
+(define (obstacle-hit-proj x y level)
+  (cond [(= level 1) (or
+                      (and (< 555 x 815) ; middle house
+                           (< 420 y 645))
+                     (and (< 55 x 305)
+                           (< 420 y 640))
+                     (and (< 410 x 750) ; top house 
+                           (< 0 y 240))
+                     (and (< 1200 x 1280) ; right house
+                           (< 45 y 275))
+                     
+                      (< x 0)
+                      (< (- WIDTH 00) x)
+                      (< y 0)
+                      (< (- HEIGHT 0) y))]))
 
 (provide (all-defined-out))
 

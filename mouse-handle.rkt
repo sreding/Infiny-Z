@@ -8,13 +8,16 @@
 
 ; Projectiles Player Number Number -> Projectiles
 (define (add-projectile Projectiles Player x y)
+  (local [(define direction (normalise (make-posn (- x (posn-x (Player-position Player)))
+                                                  (- y (posn-y (Player-position Player))))))
+          (define dx (posn-x direction))
+          (define dy (posn-y direction))]
                   (cons (make-Projectile 1
-                                         (make-posn (posn-x (Player-position Player))
-                                                    (posn-y (Player-position Player)))
-                                         (normalise (make-posn (- x (posn-x (Player-position Player)))
-                                                               (- y (posn-y (Player-position Player)))))
+                                         (make-posn (+ (* 20 dx) (posn-x (Player-position Player)))
+                                                    (+ (* 20 dy) (posn-y (Player-position Player))))
+                                         direction
                                          10)
-                        Projectiles))
+                        Projectiles)))
                         
 
 

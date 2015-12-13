@@ -1,7 +1,7 @@
 #lang racket
 
 (require "datadefinitions.rkt")
-(define ZSPEED #i10)
+(define ZSPEED #i5)
 (define WEAPONDAMAGE 10)
 (define PROJECTILE-SPEED 10)
 ; update zombies
@@ -28,8 +28,9 @@
 ; Projectiles -> Projectiles
 (define (delete-projectiles Projectiles)
   (filter (lambda (Projectile)
-            (and (< 0 (posn-x (Projectile-position Projectile)) WIDTH)
-                 (< 0  (posn-y (Projectile-position Projectile)) HEIGHT)))
+            (not (obstacle-hit-proj (posn-x (Projectile-position Projectile)) (posn-y (Projectile-position Projectile)) 1))) 
+            ;(and (< 0 (posn-x (Projectile-position Projectile)) WIDTH)
+            ;     (< 0  (posn-y (Projectile-position Projectile)) HEIGHT)))
           Projectiles))
 
 ; Projectiles -> Projectiles
@@ -89,14 +90,28 @@
 (define (zombie-dead Zombies)
   (filter (lambda (Zombie) (> (Zombie-health Zombie) 0)) Zombies))
 
+; Zombies -> Number
+; counts how many zombies died that frame
+(define (nr-dead-zombies Zombies)
+  (cond [(empty? Zombies) 0]
+        [else (if (<= (Zombie-health (first Zombies)) 0)
+                  (add1 (nr-dead-zombies (rest Zombies) ))
+                  (nr-dead-zombies (rest Zombies)))]))
+                  
+
 ; Zombies -> Zombies
 ; add random zombies
 (define (add-random-zombies Zombies)
-  (local [(define rand-nr (random 30))]
-    (cond [(= 0 rand-nr) (cons (make-Zombie ZOMBIE1
-                                      100
+  (local [(define rand-nr (random 50))
+          (define rand-zombie (random 10))]
+    (cond [(= 0 rand-nr) (cons (make-Zombie (if (= rand-zombie 0) ZOMBIE2 ZOMBIE1)
+                                      (if (= rand-zombie 0) 160 40)
                                       (make-posn 1210 590)
-                                      9000) Zombies)]
+                                      1) Zombies)]
+          [(= 1 rand-nr) (cons (make-Zombie (if (= rand-zombie 0) ZOMBIE2 ZOMBIE1)
+                                      (if (= rand-zombie 0) 160 40)
+                                      (make-posn 440 320)
+                                      1) Zombies)]
           [else Zombies])))
 
 ; GameState -> Projectiles
@@ -127,8 +142,6 @@
                (make-posn  (if (obstacle-hit x-plus-dx y 1) x x-plus-dx)
                            (if (obstacle-hit x y-plus-dy 1) y y-plus-dy))
                (Player-direction Player)
-               ;(make-posn (if (obstacle-hit x-plus-dx y 1) 0 (posn-x (Player-direction Player)))
-               ;           (if (obstacle-hit x y-plus-dy 1) 0 (posn-y (Player-direction Player))))
                (Player-Weapon Player))))
 
 ; Player Zombie -> Boolean
@@ -162,7 +175,7 @@
   (make-GameState (update-player (GameState-player state) (GameState-Zombies state))
                   (add-random-zombies (zombie-dead (update-zombies (Z-hit-detection state) (GameState-player state))))
                   (update-projectiles (Projectile-hit-detection state))
-                  (GameState-Score state)))
+                  (+ (nr-dead-zombies (Z-hit-detection state)) (GameState-Score state)))) 
 
 
 (provide (all-defined-out))
