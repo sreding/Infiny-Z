@@ -2,38 +2,41 @@
 ;(require "render.rkt")
 (require 2htdp/image)
 
-
-
-(define-struct posn [x y] #:prefab)
 ; Player:
-; img - Image
-; health - integer
-; position - posn
-; direction is one of (1,0), (0,1), (-1,0), (0,-1), (0,0)
+; img - Number - this number corresponds to an image
+; health - integer - the players health
+; position - posn - the players position
+; direction - is one of (1,0), (0,1), (-1,0), (0,-1), (0,0)
 (define-struct Player [img health position direction Weapon] #:prefab)
 
 ; Weapon
-; img - Image
-; x - Number
-; y - Number
-; projectilespeed - Number
+; img - Number - Number corresponds to an image
+; x - Number - x-cordinate of the mouse pointer 
+; y - Number - y-cordinate of the mouse pointer 
+; projectilespeed - Number - projectilespeed
 (define-struct Weapon [img x y projectilespeed]  #:prefab)
 
 ; Projectile
-; img - Image
-; position - posn
-; direction - posn
+; img - Image - Number corresponds to an image
+; position - posn - position of the projectile
+; direction - posn - direction of the projectile
 (define-struct Projectile [img position direction damage]  #:prefab)
 
 ; Zombie
+; img - Image - one of: ZOMBIE1 (normal), ZOMBIE2 (super-zombie)
+; health - Number - the Zombies health
+; position - posn - the Zombies position
+; damage - Number - the Zombies damage
 (define-struct Zombie [img health position damage]  #:prefab)
 
 ; Powerup
+; position - posn - position of the PowerUp
+; nr - Number - is one of: 0 (health pack), 1 (nuke)
 (define-struct PowerUp [position nr] #:prefab)
 
 
 ; Game State
-; Player- player
+; player- Player
 ; Zombies - List<Zombie>
 ; Projectiles - List<Projectile>
 ; PowerUps - List<PowerUp>
@@ -45,6 +48,11 @@
 ; 5 -> Level1
 ; 10 -> pause the game
 (define-struct GameState [player Zombies Projectiles PowerUps Score Menue] #:prefab)
+
+
+
+; there is no posn in racket, so we did it ourself
+(define-struct posn [x y] #:prefab)
 
 
 
@@ -67,6 +75,11 @@
 (define ZOMBIE2 (rotate 90 (bitmap/file "Super-Zombie.png")))
 (define HEALTH (bitmap/file "MedPU.png"))
 (define NUKE (bitmap/file "NukePU.png"))
+(define Menue (bitmap/file "Menu.png"))
+(define HowTo (bitmap/file "HowTo.png"))
+(define HowToTwo (bitmap/file "HowToTwo.png"))
+(define GameOver (bitmap/file "GameOver.png"))
+(define GUN (rotate 90 (bitmap/file "Gun.png")))
 
 ;Initial State Menue
 (define InitState (make-GameState (make-Player 1
@@ -134,9 +147,11 @@
 
 
 
-; global functions
-; Player Number -> Boolean
-;
+; global functions:
+; Number Number Number -> Boolean
+; returns true if player hits an obstacle
+; (we added level in case we wanted to another level, but we ended up not doing it,
+; but we left it in there in case we want to do it in the future)
 (define (obstacle-hit x y level)
   (cond [(= level 1) (or
                       (and (< 535 x 840) ; House, Center
@@ -162,7 +177,7 @@
 
 ; global functions
 ; Zombie Number Number -> Boolean
-;
+;same as obsatcle-hit but changed hitboxes for Zombies
 (define (obstacle-hit-z x y level)
   (cond [(= level 1) (or
                       (and (< 535 x 840) ; House, Center

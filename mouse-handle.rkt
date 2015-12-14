@@ -7,6 +7,7 @@
 
 
 ; Projectiles Player Number Number -> Projectiles
+; Adds a projectile in the direction of the mouse courser
 (define (add-projectile Projectiles Player x y)
   (local [(define direction (normalise (make-posn (- x (posn-x (Player-position Player)))
                                                   (- y (posn-y (Player-position Player))))))
@@ -20,7 +21,8 @@
                         Projectiles)))
                         
 
-
+; GameState -> GameState
+; handels all the mouse events (adding projectiles and navigating the menues)
 (define (mouse-handle state x y event)
   (cond [(= (GameState-Menue state) 5)
   (make-GameState (make-Player

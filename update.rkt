@@ -8,8 +8,8 @@
 
 
 
-; List<Projectile> -> List<Projectile>
-; updates the projectiles position accortingto their direction
+; Projectiles -> Projectiles
+; updates the projectiles position according to their direction
 ; position = position +speed*direction
 (define (update-position-projectiles list)
   (map (lambda (x) (make-Projectile (Projectile-img x)
@@ -21,12 +21,14 @@
 
 
 ; Projectiles -> Projectiles
+; deletes the projectiles if they leave the screen or hit an obstacle
 (define (delete-projectiles Projectiles)
   (filter (lambda (Projectile)
             (not (obstacle-hit-proj (posn-x (Projectile-position Projectile)) (posn-y (Projectile-position Projectile)) 1))) 
           Projectiles))
 
 ; Projectiles -> Projectiles
+; calls delete-projectiles and update-position-projectiles
 (define (update-projectiles Projectiles)
   (delete-projectiles (update-position-projectiles Projectiles)))
 
@@ -59,7 +61,7 @@
        Zombies))
 
 ; GameState -> Zombies
-; Tests if a projetile hits a zombie and reduces the Zombies health
+; Tests if a projetile hits a zombie and reduces the Zombies health accordingly
 (define (Z-hit-detection state)
   (local [; retrns true if zombie is hit
           (define (check-collision Zombie list)
@@ -93,7 +95,7 @@
 
 
 ; Zombies -> Zombies
-; add random zombies
+; add random zombies (and super zombies)
 (define (add-random-zombies Zombies)
   (local [(define rand-nr (random 150))
           (define rand-zombie (random 10))
@@ -116,7 +118,7 @@
           [else Zombies])))
 
 ; GameState -> Projectiles
-; 
+; detects if the projectiles hit a zombie and and deletes it if that is the case
 (define (Projectile-hit-detection state)
   (local [; retrns true if zombie is hit
           (define (check-collision Projectile list)
@@ -131,8 +133,9 @@
     (filter check-collision-1-arg (GameState-Projectiles state))))
 
 
-; updates Player in direction
+
 ; Player -> Player
+; updates Player in direction (we needed to do this that way so a player can also move diagonal)
 (define (update-player-position Player)
   (local [ (define x-plus-dx (+ (* SPEED (posn-x (Player-direction Player))) (posn-x (Player-position Player))))
            (define y-plus-dy (+ (* SPEED (posn-y (Player-direction Player))) (posn-y (Player-position Player))))
@@ -146,7 +149,7 @@
                  (Player-Weapon Player))))
 
 ; Player Zombie -> Boolean
-; returns #true if player is hit
+; returns #true if player is hit by a zombie
 (define (player-hit Player Zombie)
   (local [(define x (posn-x (Player-position Player)))
           (define y (posn-y (Player-position Player)))
@@ -165,19 +168,20 @@
                                                (Player-direction Player)
                                                (Player-Weapon Player)) (rest Zombies))]))
 ; Player PowerUp -> boolean
-; returns #true if player hits a healt pack
+; returns #true if player hits a health pack
 (define (health-pack? Player PowerUp)
   (and (and (< (- (posn-x (PowerUp-position PowerUp)) 30) (posn-x (Player-position Player)) (+ (posn-x (PowerUp-position PowerUp)) 30))
             (< (- (posn-y (PowerUp-position PowerUp)) 30) (posn-y (Player-position Player)) (+ (posn-y (PowerUp-position PowerUp)) 30)))
        (= 0 (PowerUp-nr PowerUp))))
 
 ; Player PowerUps -> Player
-; Sets Player health to 100 if the player picks up a health pack
+; retruns true if Player picks up a health pack
 (define (update-health? Player PowerUps)
   (cond [(empty? PowerUps) #false]
         [else (or (health-pack? Player (first PowerUps))
                   (update-health? Player (rest PowerUps)))]))
 ; Player PowerUps -> Player
+; sets player health to 100 if he picked up a health pack otherwise retruns the player
 (define (update-health Player PowerUps)
   (if (update-health? Player PowerUps)
       (make-Player (Player-img Player)
@@ -189,6 +193,7 @@
 
 
 ; Player -> Player
+; updates player-position, player-health
 (define (update-player Player Zombies PowerUps)
   (update-player-position (update-health (damage-calculation Player Zombies) PowerUps)))
 
@@ -198,6 +203,7 @@
   (< (Player-health (GameState-player state)) 0))
 
 ; PowerUps -> PowerUps
+; spawns a random powerup randomly on the map
 (define (spawn-random-power-up PowerUps)
   (local [(define rand-nr (random 500))
           (define rand-nr2 (random 2))
@@ -209,25 +215,27 @@
           [else PowerUps])))
 
 ; PowerUps Player -> PowerUps
+; deletes power ups that have been picked up by the player
 (define (delete-powerups PowerUps Player)
   (filter (lambda (x) (not (and (< (- (posn-x (PowerUp-position x)) 30) (posn-x (Player-position Player)) (+ (posn-x (PowerUp-position x)) 30))
                                 (< (- (posn-y (PowerUp-position x)) 30) (posn-y (Player-position Player)) (+ (posn-y (PowerUp-position x)) 30)))))
           PowerUps))
 
 ; Player PowerUp -> boolean
-; returns #true if player hits a powerup
+; returns #true if player hits a powerup and it is a nuke
 (define (player-overlaps-power-up Player PowerUp)
   (and (and (< (- (posn-x (PowerUp-position PowerUp)) 30) (posn-x (Player-position Player)) (+ (posn-x (PowerUp-position PowerUp)) 30))
             (< (- (posn-y (PowerUp-position PowerUp)) 30) (posn-y (Player-position Player)) (+ (posn-y (PowerUp-position PowerUp)) 30)))
        (= 1 (PowerUp-nr PowerUp))))
 
 ; Player PowerUps -> Player
-; Sets Player health to 100 if the player picks up a health pack
+; returns true if player picked up a nuke
 (define (nuke? Player PowerUps)
   (cond [(empty? PowerUps) #false]
         [else (or (player-overlaps-power-up Player (first PowerUps))
                   (nuke? Player (rest PowerUps)))]))
-; Player PowerUps -> Player
+; Zombies Player PowerUps -> Player
+; sets the life of all zombies to 0 if player picks up nuke, otherwise return Zombies 
 (define (nuke Zombies Player PowerUps)
   (if (nuke? Player PowerUps)
       (map (lambda (x) (make-Zombie (Zombie-img x)
@@ -242,6 +250,7 @@
 
 
 ; GameState -> GameState
+; update function, uses all previous functions accordingly (pretty complicated), this is the "on-tick" function 
 (define (update state)
   (cond [(game-over? state) (make-GameState (GameState-player state)
                                             '() '() '()

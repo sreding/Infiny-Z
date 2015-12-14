@@ -3,7 +3,7 @@
 
 
 ; Player key -> Player
-; 
+; Stops the player from walking in a direction if the key bound to this direction is released
 (define (release-update-player Player key)
   (cond [(string=? key "a")  (make-Player (Player-img Player)
                                           (Player-health Player)
@@ -31,7 +31,8 @@
                                                                  (Player-Weapon Player))]
         [else Player]))
         
-                                          
+; GameState String -> GameState
+; handles the button releases (on-release)
 (define (release state key)
   (cond [(or (= (GameState-Menue state) 5)  (= (GameState-Menue state) 10))
   (make-GameState (release-update-player (GameState-player state) key)
