@@ -1,1 +1,5 @@
+<<<<<<< Updated upstream
 ("6.2.1" ("50e6b9c4af5a2b5f94e31fc9388fc8f05d7aa756" . "c513b6d0dc70246247f7a73c9f907c671926b088") (collects #"2htdp" #"image.rkt") (collects #"racket" #"runtime-config.rkt") #"/Users/alexandercamenzind/Desktop/PF1Project/DataDefinitions.rkt" (collects #"racket" #"main.rkt"))
+=======
+("6.2.1" ("747609b6f0603049978558fbdd7eb7be00cfeaa6" . "1ad4cf12a23608b234d9a38a52d28056e5103326") (collects #"2htdp" #"image.rkt") #"/Users/simonreding/GitHub/FinalProjectZombies/DataDefinitions.rkt" (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt"))
+>>>>>>> Stashed changes
