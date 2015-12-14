@@ -9,7 +9,6 @@
 (require "render.rkt")
 (require "mouse-handle.rkt")
 (require "key-handle.rkt")
-(require "stop-conditions.rkt")
 (require "update.rkt")
 (require "release-key.rkt")
  

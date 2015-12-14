@@ -67,19 +67,19 @@
                      (/ (posn-y vec) (sqrt (+ (sqr (posn-x vec)) (sqr (posn-y vec))))))]))
 
 ; global constants
-(define BACKGROUND (bitmap/file "Map.png"))
+(define BACKGROUND (bitmap/file "images/Map.png"))
 (define SPEED 10)
 (define HEIGHT (image-height BACKGROUND))
 (define WIDTH (image-width BACKGROUND))
-(define ZOMBIE1 (rotate 90 (bitmap/file "Zombie.png")))
-(define ZOMBIE2 (rotate 90 (bitmap/file "Super-Zombie.png")))
-(define HEALTH (bitmap/file "MedPU.png"))
-(define NUKE (bitmap/file "NukePU.png"))
-(define Menue (bitmap/file "Menu.png"))
-(define HowTo (bitmap/file "HowTo.png"))
-(define HowToTwo (bitmap/file "HowToTwo.png"))
-(define GameOver (bitmap/file "GameOver.png"))
-(define GUN (rotate 90 (bitmap/file "Gun.png")))
+(define ZOMBIE1 (rotate 90 (bitmap/file "images/Zombie.png")))
+(define ZOMBIE2 (rotate 90 (bitmap/file "images/Super-Zombie.png")))
+(define HEALTH (bitmap/file "images/MedPU.png"))
+(define NUKE (bitmap/file "images/NukePU.png"))
+(define Menue (bitmap/file "images/Menu.png"))
+(define HowTo (bitmap/file "images/HowTo.png"))
+(define HowToTwo (bitmap/file "images/HowToTwo.png"))
+(define GameOver (bitmap/file "images/GameOver.png"))
+(define GUN (rotate 90 (bitmap/file "images/Gun.png")))
 
 ;Initial State Menue
 (define InitState (make-GameState (make-Player 1
