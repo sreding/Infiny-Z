@@ -1,5 +1,5 @@
 #lang racket
-;(require "render.rkt")
+
 (require 2htdp/image)
 
 ; Player:

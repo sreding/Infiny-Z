@@ -1,0 +1,1 @@
+("6.2.1" ("8c63975a8fdad51415d5c31a4f2de07bea6acb19" . "463544e42c12057eaea2c4f64e535c2ca5161084") (collects #"racket" #"runtime-config.rkt") (collects #"racket" #"main.rkt") #"/Users/alexandercamenzind/Desktop/PF1Project/programs/datadefinitions.rkt")

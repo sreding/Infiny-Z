@@ -5,12 +5,12 @@
 
 (require 2htdp/image)
 (require 2htdp/universe)
-(require "datadefinitions.rkt")
-(require "render.rkt")
-(require "mouse-handle.rkt")
-(require "key-handle.rkt")
-(require "update.rkt")
-(require "release-key.rkt")
+(require "programs/datadefinitions.rkt")
+(require "programs/render.rkt")
+(require "programs/mouse-handle.rkt")
+(require "programs/key-handle.rkt")
+(require "programs/update.rkt")
+(require "programs/release-key.rkt")
  
 
 

@@ -1,0 +1,1 @@
+("6.2.1" ("50e6b9c4af5a2b5f94e31fc9388fc8f05d7aa756" . "3923cdcc386396765e0679a20ab48ba7bc37df67") (collects #"2htdp" #"image.rkt") (collects #"racket" #"runtime-config.rkt") #"/Users/alexandercamenzind/Desktop/PF1Project/programs/DataDefinitions.rkt" (collects #"racket" #"main.rkt"))
